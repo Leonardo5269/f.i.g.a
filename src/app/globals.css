@@ -1,0 +1,684 @@
+/* ============================================================
+   f.i.g.a. — L'Etichetta Gigante
+   Palette OKLCH verificata WCAG (vedi DESIGN.md):
+   inchiostro/marmellata 7.2:1 · scorza/marmellata 5.2:1
+   carta/inchiostro 18.1:1 · carta/melanzana 13.9:1
+   ============================================================ */
+
+:root {
+  --marmellata: oklch(0.72 0.165 60);
+  --marmellata-fonda: oklch(0.55 0.15 55);
+  --scorza: oklch(0.31 0.06 55);
+  --inchiostro: oklch(0.185 0.012 55);
+  --carta: oklch(0.99 0.004 75);
+  --melanzana: oklch(0.3 0.11 330);
+  --muted: oklch(0.44 0.02 55);
+  --errore: oklch(0.42 0.16 27);
+
+  --riga: 2.5px solid var(--inchiostro);
+  --timbro-ombra: 8px 8px 0 var(--inchiostro);
+
+  --ease-out-quint: cubic-bezier(0.22, 1, 0.36, 1);
+  --dur-tocco: 150ms;
+  --dur-stato: 250ms;
+
+  --gutter: clamp(1.25rem, 4.5vw, 3.5rem);
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  margin: 0;
+  font-family: var(--font-archivo), system-ui, sans-serif;
+  background-color: var(--marmellata);
+  color: var(--inchiostro);
+  line-height: 1.5;
+  -webkit-tap-highlight-color: transparent;
+}
+
+h1,
+h2,
+h3 {
+  text-wrap: balance;
+}
+
+::selection {
+  background-color: var(--melanzana);
+  color: var(--carta);
+}
+
+:focus-visible {
+  outline: 3px solid var(--inchiostro);
+  outline-offset: 3px;
+}
+
+/* ── Testata istituzionale (fascia da etichetta) ─────────── */
+
+.testata {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 1rem;
+  padding: 0.625rem var(--gutter);
+  background-color: var(--inchiostro);
+  color: var(--carta);
+  font-size: 0.8125rem;
+  font-weight: 600;
+  font-stretch: 80%;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+}
+
+.testata p {
+  margin: 0;
+}
+
+@media (max-width: 540px) {
+  .testata-atto {
+    display: none;
+  }
+}
+
+/* ── Hero: dichiarazione di marca, orizzontale sul catalogo ── */
+
+.pagina {
+  display: block;
+}
+
+.hero {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: clamp(1.5rem, 4vw, 2rem);
+  padding: clamp(2.25rem, 6vw, 4rem) var(--gutter) clamp(2rem, 5vw, 3rem);
+  max-width: 44rem;
+  margin-inline: auto;
+  text-align: center;
+}
+
+.hero-titolo {
+  margin: 0;
+  font-size: clamp(2.5rem, 8vw, 4.25rem);
+  font-weight: 900;
+  line-height: 0.98;
+  letter-spacing: -0.025em;
+}
+
+.hero-lead {
+  margin: 0;
+  max-width: 46ch;
+  font-size: clamp(1.0625rem, 1.6vw, 1.1875rem);
+  line-height: 1.55;
+  font-weight: 500;
+  text-wrap: pretty;
+}
+
+/* ── Grafiche di prodotto: sistema condiviso hero + card ─── */
+
+.marchio-vetrina {
+  width: min(58vw, 230px);
+}
+
+.grafica svg {
+  display: block;
+  width: 100%;
+  height: auto;
+  transition: transform var(--dur-stato) var(--ease-out-quint);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .grafica:hover svg {
+    transform: scale(1.035);
+  }
+
+  .grafica:hover .sticker {
+    transform: rotate(-2deg) scale(1.035);
+  }
+}
+
+.sticker {
+  filter: drop-shadow(0 22px 38px oklch(0.31 0.08 55 / 0.38));
+  transform: rotate(-5deg);
+  animation: sticker-assesta 650ms var(--ease-out-quint) both;
+}
+
+@keyframes sticker-assesta {
+  from {
+    transform: rotate(-11deg) scale(1.05);
+  }
+  to {
+    transform: rotate(-5deg) scale(1);
+  }
+}
+
+.sticker-anello {
+  font-size: 23.5px;
+  font-weight: 700;
+  letter-spacing: 3.5px;
+  fill: var(--marmellata);
+}
+
+.sticker-marchio {
+  font-size: 86px;
+  font-weight: 900;
+  letter-spacing: -2px;
+  fill: var(--marmellata);
+}
+
+.sticker-sotto {
+  font-size: 15px;
+  font-weight: 600;
+  letter-spacing: 3px;
+  fill: var(--carta);
+}
+
+.sticker-stella {
+  font-size: 26px;
+  fill: var(--carta);
+}
+
+.capo {
+  filter: drop-shadow(0 14px 22px oklch(0.31 0.08 55 / 0.22));
+}
+
+/* ── La collezione: griglia di prodotti ──────────────────── */
+
+.prodotti {
+  padding: 0 var(--gutter) clamp(2.5rem, 6vw, 4rem);
+  max-width: 76rem;
+  margin-inline: auto;
+}
+
+.prodotti-titolo {
+  margin: 0 0 clamp(1.25rem, 3vw, 2rem);
+  font-size: clamp(1.75rem, 4vw, 2.5rem);
+  font-weight: 900;
+  letter-spacing: -0.02em;
+}
+
+.prodotti-griglia {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: clamp(1.5rem, 3vw, 2rem);
+}
+
+.prodotto-stagger {
+  animation: prodotto-entra 550ms var(--ease-out-quint) both;
+  animation-delay: calc(var(--i, 0) * 70ms);
+}
+
+@keyframes prodotto-entra {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.prodotto {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  background-color: var(--carta);
+  border: 3px solid var(--inchiostro);
+  box-shadow: var(--timbro-ombra);
+  padding: clamp(1.25rem, 3vw, 1.75rem);
+  transition:
+    transform var(--dur-stato) var(--ease-out-quint),
+    box-shadow var(--dur-stato) var(--ease-out-quint);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .prodotto:hover {
+    transform: translateY(-4px);
+    box-shadow: 11px 11px 0 var(--inchiostro);
+  }
+}
+
+.prodotto-grafica {
+  margin: 0 auto 1.25rem;
+  width: min(60%, 12rem);
+}
+
+.prodotto-corpo {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+
+.prodotto-nome {
+  margin: 0 0 0.375rem;
+  font-size: 1.25rem;
+  font-weight: 900;
+  letter-spacing: -0.01em;
+}
+
+.prodotto-tagline {
+  margin: 0 0 1rem;
+  font-size: 0.9375rem;
+  line-height: 1.45;
+  font-weight: 500;
+  color: var(--muted);
+  text-wrap: pretty;
+}
+
+.prodotto-meta {
+  margin: 0 0 1.125rem;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.75rem;
+  padding-top: 0.875rem;
+  border-top: 1.5px solid oklch(0.185 0.012 55 / 0.14);
+}
+
+.prodotto-meta dt {
+  margin: 0;
+  font-size: 0.6875rem;
+  font-weight: 700;
+  font-stretch: 82%;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--scorza);
+}
+
+.prodotto-meta dd {
+  margin: 0.125rem 0 0;
+  font-size: 0.875rem;
+  font-weight: 700;
+}
+
+.prodotto-prezzo {
+  margin: auto 0 1rem;
+  padding-top: 0.5rem;
+  font-size: 1.875rem;
+  font-weight: 900;
+  letter-spacing: -0.01em;
+  font-variant-numeric: tabular-nums;
+}
+
+.prodotto-errore {
+  margin: 0.75rem 0 0;
+  padding: 0.625rem 0.875rem;
+  border: 2px solid var(--errore);
+  color: var(--errore);
+  font-size: 0.875rem;
+  font-weight: 600;
+}
+
+.compra {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.625rem;
+  width: 100%;
+  min-height: 3.5rem;
+  padding: 1rem 2rem;
+  border: none;
+  border-radius: 999px;
+  background-color: var(--inchiostro);
+  color: var(--carta);
+  font-family: inherit;
+  font-size: 1.1875rem;
+  font-weight: 800;
+  letter-spacing: 0.01em;
+  cursor: pointer;
+  transition:
+    background-color var(--dur-tocco) var(--ease-out-quint),
+    transform var(--dur-tocco) var(--ease-out-quint),
+    box-shadow var(--dur-stato) var(--ease-out-quint);
+}
+
+.compra:hover:not(:disabled) {
+  background-color: var(--melanzana);
+  transform: translateY(-2px);
+  box-shadow: 0 12px 24px oklch(0.3 0.11 330 / 0.3);
+}
+
+.compra:active:not(:disabled) {
+  transform: translateY(0) scale(0.98);
+  box-shadow: none;
+}
+
+.compra:focus-visible {
+  outline-color: var(--melanzana);
+}
+
+.compra:disabled {
+  cursor: progress;
+  background-color: var(--scorza);
+}
+
+.spinner {
+  width: 1.05em;
+  height: 1.05em;
+  flex: none;
+  border: 3px solid oklch(0.99 0.004 75 / 0.35);
+  border-top-color: var(--carta);
+  border-radius: 50%;
+  animation: gira 700ms linear infinite;
+}
+
+@keyframes gira {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* ── Dettagli: manifesto + fatti di marca ────────────────── */
+
+.dettagli {
+  border-top: var(--riga);
+  padding: clamp(2.5rem, 6vw, 4.5rem) var(--gutter);
+}
+
+.dettagli-griglia {
+  max-width: 76rem;
+  margin-inline: auto;
+  display: grid;
+  gap: clamp(2rem, 5vw, 4rem);
+  align-items: start;
+}
+
+@media (min-width: 880px) {
+  .dettagli-griglia {
+    grid-template-columns: minmax(0, 30rem) minmax(0, 1fr);
+  }
+}
+
+.valori {
+  max-width: 36rem;
+  background-color: var(--carta);
+  border: 3px solid var(--inchiostro);
+  box-shadow: var(--timbro-ombra);
+  padding: clamp(1.25rem, 3vw, 1.75rem);
+}
+
+.valori-titolo {
+  margin: 0;
+  font-size: 1.375rem;
+  font-weight: 900;
+  font-stretch: 82%;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+.valori-sub {
+  margin: 0.25rem 0 1rem;
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: var(--muted);
+}
+
+.valori table {
+  width: 100%;
+  border-collapse: collapse;
+  border-top: 2px solid var(--inchiostro);
+}
+
+.valori th,
+.valori td {
+  padding: 0.625rem 0;
+  border-bottom: 1.5px solid oklch(0.185 0.012 55 / 0.18);
+  font-size: 1rem;
+}
+
+.valori th {
+  text-align: left;
+  font-weight: 500;
+}
+
+.valori td {
+  text-align: right;
+  font-weight: 800;
+  font-variant-numeric: tabular-nums;
+}
+
+.valori-footnote {
+  margin: 0.875rem 0 0;
+  font-size: 0.8125rem;
+  line-height: 1.5;
+  color: var(--muted);
+  font-weight: 500;
+  text-wrap: pretty;
+}
+
+.specifiche {
+  padding-top: 0.25rem;
+}
+
+.specifiche dl {
+  margin: 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(9.5rem, 1fr));
+  gap: 1.5rem 2rem;
+}
+
+.specifiche dt {
+  font-size: 0.8125rem;
+  font-weight: 700;
+  font-stretch: 82%;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+  color: var(--scorza);
+}
+
+.specifiche dd {
+  margin: 0.25rem 0 0;
+  font-size: clamp(1.375rem, 2.5vw, 1.75rem);
+  font-weight: 900;
+  letter-spacing: -0.01em;
+}
+
+.specifiche-resistenza {
+  margin: clamp(1.75rem, 4vw, 2.5rem) 0 0;
+  max-width: 44ch;
+  font-size: clamp(1.1875rem, 2vw, 1.375rem);
+  font-weight: 700;
+  line-height: 1.4;
+  text-wrap: pretty;
+}
+
+/* ── Fondo etichetta: barcode e note legali ──────────────── */
+
+.fondo {
+  border-top: var(--riga);
+  padding: clamp(1.75rem, 4vw, 2.5rem) var(--gutter) clamp(2.25rem, 5vw, 3rem);
+}
+
+.fondo-griglia {
+  max-width: 76rem;
+  margin-inline: auto;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.75rem 3rem;
+  align-items: flex-end;
+  justify-content: space-between;
+}
+
+.barcode {
+  display: block;
+  height: 44px;
+  width: auto;
+  fill: var(--inchiostro);
+}
+
+.barcode-numero {
+  margin: 0.375rem 0 0;
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  color: var(--scorza);
+  font-variant-numeric: tabular-nums;
+}
+
+.fondo-note {
+  max-width: 46ch;
+}
+
+.fondo-note p {
+  margin: 0;
+  font-size: 0.875rem;
+  line-height: 1.55;
+  font-weight: 500;
+  color: var(--scorza);
+  text-wrap: pretty;
+}
+
+.fondo-note p + p {
+  margin-top: 0.25rem;
+}
+
+/* ── Esiti: success e cancel (registro serio) ────────────── */
+
+.esito {
+  min-height: calc(100dvh - 2.6rem);
+  display: grid;
+  place-items: center;
+  padding: clamp(2rem, 6vw, 4rem) var(--gutter);
+}
+
+.esito-pannello {
+  width: 100%;
+  max-width: 36rem;
+  background-color: var(--carta);
+  border: 3px solid var(--inchiostro);
+  box-shadow: var(--timbro-ombra);
+  padding: clamp(1.75rem, 5vw, 2.75rem);
+}
+
+.timbro {
+  display: inline-block;
+  margin: 0 0 1.5rem;
+  padding: 0.375rem 0.875rem;
+  border: 3px solid var(--melanzana);
+  color: var(--melanzana);
+  font-size: 0.875rem;
+  font-weight: 800;
+  font-stretch: 82%;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  transform: rotate(-3deg);
+}
+
+.timbro-annullato {
+  border-color: var(--scorza);
+  color: var(--scorza);
+}
+
+.esito-titolo {
+  margin: 0 0 0.875rem;
+  font-size: clamp(2.25rem, 6vw, 3.25rem);
+  font-weight: 900;
+  line-height: 1;
+  letter-spacing: -0.02em;
+}
+
+.esito-testo {
+  margin: 0 0 1.5rem;
+  max-width: 52ch;
+  font-size: 1.0625rem;
+  line-height: 1.55;
+  font-weight: 500;
+  text-wrap: pretty;
+}
+
+.esito-rif {
+  margin: 0 0 1.5rem;
+  padding: 0.875rem 1rem;
+  background-color: oklch(0.185 0.012 55 / 0.06);
+  font-size: 0.875rem;
+  line-height: 1.5;
+  word-break: break-all;
+  font-variant-numeric: tabular-nums;
+}
+
+.esito-rif strong {
+  display: block;
+  font-size: 0.75rem;
+  font-weight: 700;
+  font-stretch: 82%;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 0.25rem;
+}
+
+.esito-azione {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 3.25rem;
+  padding: 0.875rem 2rem;
+  border: 3px solid var(--inchiostro);
+  border-radius: 999px;
+  background-color: var(--inchiostro);
+  color: var(--carta);
+  font-size: 1.0625rem;
+  font-weight: 800;
+  text-decoration: none;
+  transition:
+    background-color var(--dur-tocco) var(--ease-out-quint),
+    color var(--dur-tocco) var(--ease-out-quint),
+    transform var(--dur-tocco) var(--ease-out-quint);
+}
+
+.esito-azione:hover {
+  background-color: var(--melanzana);
+  border-color: var(--melanzana);
+  transform: translateY(-2px);
+}
+
+.esito-azione:focus-visible {
+  outline-color: var(--melanzana);
+}
+
+.esito-chiosa {
+  margin: 1.5rem 0 0;
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: var(--muted);
+  font-style: italic;
+}
+
+/* ── Accessibilità: motion ridotto ───────────────────────── */
+
+@media (prefers-reduced-motion: reduce) {
+  .sticker {
+    animation: none;
+    transition: none;
+  }
+
+  .grafica svg,
+  .prodotto {
+    transition: none;
+  }
+
+  .prodotto-stagger {
+    animation: none;
+  }
+
+  .compra,
+  .esito-azione {
+    transition: none;
+  }
+
+  .compra:hover:not(:disabled),
+  .esito-azione:hover {
+    transform: none;
+  }
+
+  .spinner {
+    animation-duration: 1.8s;
+  }
+}
