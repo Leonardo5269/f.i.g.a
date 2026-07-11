@@ -1,11 +1,11 @@
 import Link from "next/link";
+import Image from "next/image";
 
 export default function CancelPage() {
   return (
     <>
       <header className="testata">
-        <p>Facciamo Italia Grande Ancora</p>
-        <p className="testata-atto">Ufficio ripensamenti</p>
+        <Image src="/logo.svg" alt="F.I.G.A." width={52} height={52} className="testata-logo" />
       </header>
 
       <main className="esito">

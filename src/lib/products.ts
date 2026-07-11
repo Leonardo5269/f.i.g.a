@@ -1,11 +1,9 @@
 export interface Product {
   id: string;
   name: string;
-  tagline: string;
   priceCents: number;
-  fit: string;
-  material: string;
-  images?: string[];
+  image: string;
+  badge?: string;
 }
 
 // Fonte di verità del catalogo: prezzo in centesimi (interi) per
@@ -13,67 +11,59 @@ export interface Product {
 // legge da qui lato server; il client non decide mai un prezzo.
 export const PRODUCTS: Product[] = [
   {
-    id: "adesivo",
-    name: "L'Adesivo Ufficiale",
-    tagline: "Vinile opaco, Ø 10 cm. Il classico, ridotto all'osso.",
-    priceCents: 1000,
-    fit: "Taglia unica",
-    material: "Vinile opaco",
+    id: "maglietta-nera",
+    name: 'T-SHIRT NERA "F.I.G.A."',
+    priceCents: 3500,
+    image: "/maglietta/maglietta-nera.jpg",
   },
   {
-    id: "maglietta",
-    name: "La Maglietta Ufficiale",
-    tagline: "Cotone pesante, stampa che non sbiadisce prima del rimpianto.",
-    priceCents: 2500,
-    fit: "Taglia unica oversize",
-    material: "100% cotone",
-    images: [
-      "/maglietta/maglietta-1.png",
-      "/maglietta/maglietta-2.png",
-      "/maglietta/maglietta-3.png",
-    ],
+    id: "maglietta-bianca",
+    name: 'T-SHIRT BIANCA "F.I.G.A."',
+    priceCents: 3500,
+    image: "/maglietta/t-shirt-bianca.jpg",
+  },
+  {
+    id: "maglietta-bordeaux",
+    name: 'T-SHIRT BORDEAUX "F.I.G.A."',
+    priceCents: 3500,
+    image: "/maglietta/maglietta-1.png",
   },
   {
     id: "felpa",
-    name: "La Felpa Ufficiale",
-    tagline: "Girocollo pesante, per quando l'orgoglio ha bisogno di maniche.",
-    priceCents: 4500,
-    fit: "Taglia unica oversize",
-    material: "80% cotone, 20% poliestere",
-    images: [
-      "/felpa/felpa-1.png",
-      "/felpa/felpa-2.png",
-      "/felpa/felpa-3.png",
-      "/felpa/felpa-4.png",
-    ],
+    name: 'FELPA NERA "F.I.G.A."',
+    priceCents: 7500,
+    image: "/felpa/felpa-nera.jpg",
   },
   {
-    id: "cappellino",
-    name: "Il Cappellino Ufficiale",
-    tagline: "Visiera curva, cinturino regolabile, aria da comizio.",
-    priceCents: 2000,
-    fit: "Taglia unica regolabile",
-    material: "Cotone twill",
-    images: [
-      "/cappellino/cappellino-1.png",
-      "/cappellino/cappellino-2.png",
-      "/cappellino/cappellino-3.png",
-      "/cappellino/cappellino-4.png",
-    ],
+    id: "felpa-girocollo-bordeaux",
+    name: 'FELPA GIROCOLLO BORDEAUX "F.I.G.A."',
+    priceCents: 7000,
+    image: "/felpa/felpa-1.png",
   },
   {
     id: "sciarpa",
-    name: "La Sciarpa Ufficiale",
-    tagline: "Da stadio, non da montagna. Scalda l'idea, non il collo.",
-    priceCents: 2200,
-    fit: "180 × 20 cm",
-    material: "Acrilico jacquard",
-    images: [
-      "/sciarpa/sciarpa-1.png",
-      "/sciarpa/sciarpa-2.png",
-      "/sciarpa/sciarpa-3.png",
-      "/sciarpa/sciarpa-4.png",
-    ],
+    name: "SCIARPA STADIO TRICOLORE",
+    priceCents: 2500,
+    image: "/sciarpa/sciarpa-1.png",
+    badge: "DROP LIMITATO",
+  },
+  {
+    id: "cappellino",
+    name: 'CAPPELLINO "F.I.G.A."',
+    priceCents: 3000,
+    image: "/cappellino/cappellino-1.png",
+  },
+  {
+    id: "adesivi",
+    name: "STICKER PACK IGNORANTE",
+    priceCents: 1000,
+    image: "/stampe/stickers.jpg",
+  },
+  {
+    id: "guanti",
+    name: 'GUANTI IN PELLE "F.I.G.A."',
+    priceCents: 4000,
+    image: "/guanti/guanti-1.png",
   },
 ];
 
@@ -83,7 +73,7 @@ export function getProductById(id: string): Product | undefined {
 
 export function formatEuros(cents: number): string {
   return (cents / 100).toLocaleString("it-IT", {
-    minimumFractionDigits: 2,
+    minimumFractionDigits: 0,
     maximumFractionDigits: 2,
   });
 }

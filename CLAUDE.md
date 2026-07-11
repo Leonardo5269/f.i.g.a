@@ -13,6 +13,6 @@ E-commerce MVP B2C multi-prodotto (merchandising fisico, acquisto d'impulso): Ne
 Il contesto strategico e visivo del progetto vive in due file alla radice, da leggere prima di qualsiasi lavoro su UI, copy o brand:
 
 - **PRODUCT.md** — registro (brand), utenti, scopo, personalità ("irriverente, pop, diretto"), anti-riferimenti e principi di design. Marchio orizzontale (nessun prodotto è il volto del brand più di un altro). È la fonte di verità strategica.
-- **DESIGN.md** — sistema visivo con token reali: North Star "L'Etichetta Gigante", strategia colore Drenched su arancio marmellata, monofamiglia Archivo a pesi estremi, il "Patch" (badge di marca) riprodotto identico su ogni prodotto.
+- **DESIGN.md** — sistema visivo con token reali: North Star "Il Manifesto da Stadio", attitude ultras/stadio su base e-commerce pulita, alternanza dark (nero quasi, brand) / light (bianco rotto, prodotto) per sezione, slab serif monumentale (stile "Graduate") per i titoli manifesto + Archivo per corpo/UI, tricolore verde/bianco/rosso usato solo come accento sottile (divisore, badge, dettaglio prodotto), rosso corsa riservato a CTA e badge di rilievo.
 
 Vincolo non negoziabile: l'irriverenza vive nel copy e nel visual, mai nel percorso transazionale (checkout, success, cancel), che resta serio, chiaro e WCAG 2.2 AA.

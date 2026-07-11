@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, type ReactNode } from "react";
+import { useState } from "react";
 import Image from "next/image";
 import type { Product } from "@/lib/products";
 import { formatEuros } from "@/lib/products";
@@ -12,10 +12,9 @@ interface CheckoutResponse {
 
 interface ProductCardProps {
   product: Product;
-  graphic: ReactNode;
 }
 
-export function ProductCard({ product, graphic }: ProductCardProps) {
+export function ProductCard({ product }: ProductCardProps) {
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
 
@@ -51,59 +50,34 @@ export function ProductCard({ product, graphic }: ProductCardProps) {
     }
   }
 
-  const hasPhotos = product.images && product.images.length > 0;
-
   return (
     <article className="prodotto">
-      <div className="grafica prodotto-grafica">
-        {hasPhotos ? (
-          <Image
-            src={product.images![0]}
-            alt={product.name}
-            fill
-            sizes="(max-width: 768px) 100vw, 50vw"
-            className="prodotto-foto"
-            style={{ objectFit: "cover" }}
-          />
-        ) : (
-          graphic
-        )}
+      {product.badge && <span className="prodotto-badge">{product.badge}</span>}
+
+      <div className="prodotto-foto-wrap">
+        <Image
+          src={product.image}
+          alt={product.name}
+          fill
+          sizes="(max-width: 768px) 100vw, 33vw"
+          className="prodotto-foto"
+        />
       </div>
 
       <div className="prodotto-corpo">
-        <h3 className="prodotto-nome">{product.name}</h3>
-        <p className="prodotto-tagline">{product.tagline}</p>
-
-        <dl className="prodotto-meta">
-          <div>
-            <dt>Fit</dt>
-            <dd>{product.fit}</dd>
-          </div>
-          <div>
-            <dt>Materiale</dt>
-            <dd>{product.material}</dd>
-          </div>
-        </dl>
-
-        <p className="prodotto-prezzo">
-          {formatEuros(product.priceCents)}&nbsp;€
-        </p>
+        <div className="prodotto-riga">
+          <h3 className="prodotto-nome">{product.name}</h3>
+          <p className="prodotto-prezzo">&euro;{formatEuros(product.priceCents)}</p>
+        </div>
 
         <button
           type="button"
-          className="compra"
+          className="prodotto-bottone"
           onClick={handleBuyNow}
           disabled={loading}
           aria-busy={loading}
         >
-          {loading ? (
-            <>
-              <span className="spinner" aria-hidden="true" />
-              Ti porto alla cassa…
-            </>
-          ) : (
-            "Compralo ora"
-          )}
+          {loading ? "ATTENDI…" : "AGGIUNGI AL CARRELLO"}
         </button>
 
         {error !== null && (

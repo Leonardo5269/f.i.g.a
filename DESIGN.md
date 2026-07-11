@@ -1,148 +1,159 @@
 ---
 name: f.i.g.a.
-description: Catalogo merchandising drenched-orange, pop italiana e sfacciata, cinque prodotti sotto un solo marchio orizzontale.
+description: Merch patriottico ultras/stadio, base e-commerce pulita orientata alla conversione con momenti da poster di propaganda. Verde bandiera, rosso corsa, sezioni dark/light alternate, slab serif monumentale + grotesque.
 colors:
-  marmellata: "#ed8712"
-  marmellata-fonda: "#b15300"
-  scorza: "#47270f"
-  inchiostro: "#17110e"
-  carta: "#fdfbf9"
-  melanzana: "#4a1147"
-  muted: "#5c5048"
-  errore: "#a8321a"
+  verde-bandiera: "#008C45"
+  bianco-rotto: "#F4F5F0"
+  rosso-bandiera: "#CD212A"
+  rosso-corsa: "#D40000"
+  nero-quasi: "#0D0D0D"
 typography:
   display:
-    fontFamily: "Archivo, system-ui, sans-serif"
-    fontSize: "clamp(2.5rem, 8vw, 4.25rem)"
-    fontWeight: 900
-    lineHeight: 0.98
-    letterSpacing: "-0.025em"
+    fontFamily: "'Graduate', Georgia, serif"
+    fontSize: "clamp(2.75rem, 9vw, 6rem)"
+    fontWeight: 400
+    lineHeight: 0.95
+    letterSpacing: "-0.01em"
+    textTransform: "uppercase"
   body:
     fontFamily: "Archivo, system-ui, sans-serif"
     fontSize: "1rem"
     fontWeight: 500
     lineHeight: 1.55
   label:
-    fontFamily: "Archivo, system-ui, sans-serif"
+    fontFamily: "'Archivo Expanded', Archivo, system-ui, sans-serif"
+    fontStretch: "condensed"
     fontSize: "0.8125rem"
     fontWeight: 700
-    letterSpacing: "0.09em"
+    letterSpacing: "0.14em"
+    textTransform: "uppercase"
 rounded:
-  pill: "999px"
   none: "0px"
+  sharp: "2px"
 spacing:
   gutter: "clamp(1.25rem, 4.5vw, 3.5rem)"
 components:
   button-primary:
-    backgroundColor: "{colors.inchiostro}"
-    textColor: "{colors.carta}"
-    rounded: "{rounded.pill}"
-    padding: "1rem 2rem"
+    backgroundColor: "{colors.rosso-corsa}"
+    textColor: "{colors.bianco-rotto}"
+    rounded: "{rounded.sharp}"
+    padding: "1rem 2.25rem"
   button-primary-hover:
-    backgroundColor: "{colors.melanzana}"
+    backgroundColor: "{colors.rosso-bandiera}"
   product-card:
-    backgroundColor: "{colors.carta}"
-    textColor: "{colors.inchiostro}"
+    backgroundColor: "{colors.bianco-rotto}"
+    textColor: "{colors.nero-quasi}"
     rounded: "{rounded.none}"
+  tricolor-divider:
+    height: "4px"
+    stops: ["{colors.verde-bandiera}", "{colors.bianco-rotto}", "{colors.rosso-bandiera}"]
 ---
 
 # Design System: f.i.g.a.
 
 ## 1. Overview
 
-**Creative North Star: "L'Etichetta Gigante"**
+**Creative North Star: "Il Manifesto da Stadio"**
 
-Un'etichetta da supermercato italiano anni '70 ingrandita a scala manifesto: colore pieno da inchiostro tipografico, lettering nero e grasso, franchezza da scaffale. Il riferimento incrocia tre mondi: la precisione irriverente di Taffo (la battuta regge perché il mestiere è serissimo), la drop page di MSCHF (un oggetto, zero spiegazioni, desiderio puro) e il culto costruito da Liquid Death su un prodotto banale. L'estetica è la grafica pop italiana da farmacia/drogheria: colori pieni, niente sfumature, tipografia che urla senza scusarsi.
+Un manifesto da curva ultras stampato con la disciplina di un e-commerce che deve convertire: la base è pulita, veloce, leggibile — niente fronzoli da negozio — ma ogni tanto la pagina si concede un momento da poster di propaganda: nero pieno, tipografia monumentale, un'immagine drammatica. Il sistema alterna sezioni buie da brand (hero, CTA di chiusura) a sezioni chiare da prodotto (griglia, footer neutro), con lo stesso ritmo di un'etichetta cucita che torna identica su ogni capo.
 
-Il marchio è **orizzontale, non verticale**: cinque prodotti (adesivo, maglietta, felpa, cappellino, sciarpa) hanno pari dignità nella griglia. Nessuno di loro è "il prodotto" del brand; il timbro di marca (il badge circolare "figa") è il vero North Star visivo, riprodotto identico su ogni articolo come un'etichetta cucita.
-
-Questo sistema rifiuta esplicitamente: la scheda marketplace, la landing SaaS, il luxury pretenzioso, la bancarella discount, la politica reale (da PRODUCT.md) e, come anti-riferimento puntuale, il tema Shopify monoprodotto da dropshipping con hero anonimo, badge di fiducia e recensioni finte.
+Questo non è minimal-luxury (niente serif dorati, niente tono da maison) né corporate (niente card a tre colonne, niente gradienti). È una base e-commerce onesta — griglia prodotto leggibile, prezzo chiaro, bottone d'acquisto ovunque uguale — vestita con l'attitude di una curva: ironica, fiera, sfacciata, mai seria fino al ridicolo tranne dove serve fiducia (il percorso di pagamento).
 
 **Key Characteristics:**
-- Superficie immersa nel colore brand (strategia Drenched): la pagina È l'arancio.
-- Tipografia monofamiglia (Archivo) a pesi estremi: titoli enormi e neri, corpo essenziale.
-- Ogni prodotto, un click: nessun carrello, nessuna configurazione di varianti.
-- Motion "Responsive": stagger d'ingresso sulla griglia, feedback immediati su hover, nessuna coreografia che rallenti l'impulso.
-- Irriverenza nel copy e nel visual, serietà assoluta nel percorso di pagamento.
+- Alternanza netta dark/light per sezione: il nero è il colore del brand-moment, il bianco rotto è il colore del prodotto.
+- Tipografia a due registri: slab serif monumentale (stile "Graduate") per i titoli manifesto, grotesque pulito (Archivo) per corpo e UI, condensed uppercase per etichette/badge.
+- Il tricolore (verde/bianco/rosso) è un accento sottile — riga divisoria, badge, sciarpa prodotto — mai un campo colore grande.
+- Un solo bottone d'azione per superficie, sempre rosso corsa: nessuna ambiguità su cosa cliccare.
+- Irriverenza nel copy e nell'immagine, serietà assoluta nel percorso transazionale.
 
-## 2. Colors: La Marmellata
+## 2. Colors
 
-Strategia **Drenched**: il colore non decora la pagina, la costituisce.
-
-**The Drenched Rule.** La superficie È il colore. L'arancio marmellata copre il fondo pagina, non un accento: chi arriva deve avere la sensazione di essere entrato dentro il packaging. I neutri esistono solo al servizio della leggibilità (testo, pannelli prodotto, esiti), mai come rifugio.
+**La regola dark/light per sezione.** Ogni sezione ha un solo scopo: o è un momento di brand (nero pieno, tipografia enorme) o è un momento di prodotto (bianco rotto, griglia leggibile). Non si mescolano mai nello stesso blocco.
 
 ### Primary
-- **Arancio Marmellata** (`oklch(0.72 0.165 60)` / #ed8712): fondo pagina e identità. Contrasto verificato ≥7.2:1 con l'Inchiostro sopra.
-- **Marmellata Fonda** (`oklch(0.55 0.15 55)` / #b15300): variante profonda per bordi e stati su superfici arancioni.
+- **Nero Quasi** (`#0D0D0D`): fondo delle sezioni brand (navbar, hero, CTA di chiusura, footer). È il colore che porta il peso drammatico del manifesto.
+- **Bianco Rotto** (`#F4F5F0`): fondo delle sezioni prodotto. Non è bianco puro — ha la temperatura della carta stampata, non dello schermo.
 
-### Secondary
-- **Melanzana** (`oklch(0.3 0.11 330)` / #4a1147): accento di contrasto netto per hover dei bottoni e focus ring. Contrasto ≥13.9:1 con la Carta.
+### Accent (tricolore, con moderazione)
+- **Verde Bandiera** (`#008C45`): primo terzo della riga tricolore divisoria; mai un campo pieno.
+- **Rosso Bandiera** (`#CD212A`): terzo terzo della riga tricolore; badge secondari, dettaglio sciarpa prodotto.
+- **Rosso Corsa** (`#D40000`): riservato esclusivamente a CTA e badge ("COMPRA ORA", "ADD TO CART", "DROP LIMITATO", "MANDA"). Se è rosso corsa, è cliccabile o è un'urgenza — mai decorazione.
 
-### Neutral
-- **Inchiostro** (`oklch(0.185 0.012 55)` / #17110e): testo primario, silhouette dei capi, bottoni. Contrasto 18.1:1 su Carta, 7.2:1 su Marmellata.
-- **Scorza** (`oklch(0.31 0.06 55)` / #47270f): testo secondario su fondo arancione (etichette, meta). Contrasto 5.2:1 su Marmellata.
-- **Carta** (`oklch(0.99 0.004 75)` / #fdfbf9): pannelli che staccano dal drench (card prodotto, pannelli esito).
-- **Muted** (`oklch(0.44 0.02 55)` / #5c5048): testo secondario su Carta. Contrasto 7.6:1.
+**The One CTA Color Rule.** Il rosso corsa identifica l'azione in ogni superficie della pagina: se compare, è un pulsante o un badge di rilievo. Non si usa altrove.
 
-**The Serious Checkout Rule.** Il percorso transazionale (prezzo, pulsante, esiti success/cancel) usa i valori a contrasto più alto e più convenzionale del sistema: lì la fiducia batte la battuta.
+**The Serious Checkout Rule.** Il percorso transazionale (prezzo, pulsante d'acquisto, esiti success/cancel) resta ad alto contrasto e ai colori più convenzionali del sistema (nero quasi su bianco rotto, rosso corsa per l'azione): lì la fiducia batte la battuta.
 
 ## 3. Typography
 
-**Display Font:** Archivo (variabile, asse `wdth`), con fallback system-ui
-**Body Font:** Archivo, stessa famiglia, peso regolare
+**Display Font:** slab serif monumentale in stile "Graduate" (o equivalente da college jersey), sempre uppercase, sempre centrata nei blocchi di brand.
+**Body/UI Font:** Archivo, grotesque pulito, per corpo testo, nome prodotto, form.
+**Label Font:** una variante condensed uppercase di Archivo (o Archivo Expanded compresso), per eyebrow, badge, meta di prodotto.
 
-**Character:** Una sola famiglia grassa e geometrica portata ai suoi estremi: Black/900 per i titoli a scala manifesto, Regular/500 per il corpo. Il contrasto lo fanno peso e dimensione, non la moltiplicazione dei font. Voce da insegna, non da rivista.
+**Character:** due registri distinti e mai mescolati nello stesso elemento. Il titolo da manifesto (slab serif) grida in blocco unico su due righe; la sans grottesca lavora in silenzio su prezzo, descrizione, form. Il condensed uppercase firma le etichette come uno stemma da toppa.
 
 ### Hierarchy
-- **Display** (900, `clamp(2.5rem, 8vw, 4.25rem)`, line-height 0.98): titolo di pagina ("Il Merchandising Ufficiale."). Una sola occorrenza per viewport.
-- **Headline** (900, 1.25–2.5rem): titoli di sezione e nome prodotto in ogni card.
-- **Body** (500, 1rem, line-height 1.55, max 46–52ch): lead e tagline di prodotto.
-- **Label** (700, 0.6875–0.875rem, letter-spacing 0.08–0.09em, uppercase): meta di prodotto (Fit/Materiale), testata istituzionale.
+- **Display** (slab serif, uppercase, `clamp(2.75rem, 9vw, 6rem)`, line-height 0.95): headline manifesto dell'hero e della CTA di chiusura. Centrata o a due colonne, mai in corpo minore.
+- **Section Title** (slab serif, uppercase, 1.75–2.75rem): titolo di sezione prodotto ("LA ROBA"), sempre con riga tricolore sotto.
+- **Body** (Archivo 500, 1rem, line-height 1.55): sublinea hero, testo CTA, contenuto form.
+- **Label** (condensed uppercase, 700, 0.75–0.875rem, letter-spacing 0.14em): eyebrow ("NUOVI ARRIVI"), nome prodotto in card, badge.
 
-**The One Family Rule.** Una famiglia sola. Se serve più contrasto, si aumenta il divario di peso o di corpo, non si aggiunge un font.
+**The Two-Register Rule.** Se un testo deve gridare, è slab serif uppercase. Se deve informare o far agire (prezzo, form, bottone), è Archivo. Non c'è una terza famiglia.
 
-## 4. Elevation
+## 4. Layout & Sections
 
-Piatto per default, coerente con l'energia "Responsive": le superfici sono inchiostro pieno su carta, senza ombre ambientali morbide. L'unica "ombra" del sistema è il **timbro-ombra** (`8px 8px 0 var(--inchiostro)`): un'ombra dura, offset netto, senza blur, che legge come un timbro pressato sulla carta piuttosto che come un'elevazione fisica. Sale a `11px 11px 0` sull'hover delle card prodotto, come risposta a uno stato, mai come decorazione a riposo.
+Il sistema è definito sequenza per sequenza, non come componenti liberi: ogni sezione ha un fondo fisso e un solo compito.
+
+### Navbar
+Barra nero quasi, solo il logo "F.I.G.A." centrato in slab serif bianco. Nessun link, nessuna icona, nessun carrello visibile: la fiducia nel checkout monoprodotto rende superfluo il chrome da e-commerce classico.
+
+### Hero (dark)
+Fondo nero quasi, due colonne. Sinistra: eyebrow condensed uppercase, headline slab serif enorme su due righe, sublinea Archivo grigia, un solo CTA rosso corsa. Destra: fotografia drammatica a luce laterale, sfondo che si fonde nel nero della sezione — mai un riquadro isolato con bordo netto.
+
+### Prodotti (light)
+Fondo bianco rotto. Titolo di sezione centrato con riga tricolore come divisore. Griglia 3×2: foto su grigio chiaro, nome in Archivo, prezzo in grassetto, un bottone rosso corsa per card ("ADD TO CART"). Al massimo una card porta un badge rosso di rilievo ("DROP LIMITATO"); le altre restano di pari peso — coerente con il principio "orizzontale, non verticale" del marchio.
+
+### CTA di chiusura + Contatto (dark)
+Fondo nero quasi, headline slab serif centrata, sublinea ironica, poi un form semplice sulla stessa sezione scura: campi "Nome", "Email", "Messaggio" (textarea), bottone rosso corsa "MANDA". Input scuri con bordo sottile chiaro — mai un pannello bianco che rompe il fondo.
+
+### Footer (dark)
+Nero quasi, bordo superiore segnato dalla riga tricolore sottile. Logo, una riga di tagline, testo legale minimo, icone social. Compatto: il footer non ripete la headline del brand, la firma soltanto.
 
 ## 5. Components
 
-### Product Card
-- **Forma:** pannello Carta, bordo pieno 3px Inchiostro, timbro-ombra. Nessun arrotondamento (spigolo vivo, coerente con l'etichetta).
-- **Contenuto:** grafica del capo (line-art Inchiostro + patch di marca) → nome (900) → tagline (Muted) → meta Fit/Materiale (griglia 2 colonne, separata da hairline) → prezzo (900, grande) → bottone.
-- **Hover:** `translateY(-4px)` + timbro-ombra che si allunga a 11px; la grafica interna scala 1.035×.
-- **Ingresso:** stagger di griglia, `translateY(14px)→0` + fade, 70ms di ritardo per indice, disattivato su `prefers-reduced-motion`.
+### Tricolor Divider
+Riga sottile a tre bande uguali (verde/bianco rotto/rosso), altezza 3–4px. Unico uso ammesso del tricolore come campo colore continuo, e solo come separatore, mai come sfondo di un blocco.
 
-### Patch (timbro di marca)
-- **Forma:** cerchio pieno Inchiostro, anello tratteggiato Marmellata all'interno, wordmark "figa" in Marmellata, peso 900.
-- **Uso:** riprodotto identico su ogni capo (petto per maglietta/felpa, calotta per il cappellino, centro nastro per la sciarpa) e come cuore del timbro di marca grande in hero (il badge dell'Adesivo). È il vero segno distintivo del sistema, non un logo a parte.
+### Product Card
+- **Forma:** pannello bianco rotto, foto su grigio chiaro, nessun bordo pesante, nessun arrotondamento.
+- **Contenuto:** foto → nome (Archivo) → prezzo (Archivo bold) → bottone rosso corsa "ADD TO CART".
+- **Badge di rilievo:** riservato a un solo prodotto per griglia, rosso corsa/bandiera, angolo superiore, condensed uppercase.
 
 ### Buttons
-- **Forma:** pillola (`border-radius: 999px`), nessuno spigolo vivo (contrasto intenzionale con gli spigoli vivi dei pannelli).
-- **Primary ("Compralo ora"):** sfondo Inchiostro, testo Carta, 800/1.1875rem. Hover: sfondo Melanzana + `translateY(-2px)` + ombra diffusa Melanzana. Active: scala 0.98. Disabled (loading): sfondo Scorza, spinner rotante, `aria-busy`.
-- **Secondary (link esito, "Torna al catalogo"):** stesso trattamento pillola, bordo Inchiostro pieno.
+- **Primary (CTA hero, "ADD TO CART", "MANDA"):** sfondo rosso corsa, testo bianco rotto, angoli quasi vivi (2px), condensed o Archivo bold. Hover: sfondo rosso bandiera.
+- **Un solo primary per superficie visibile**: mai due bottoni rosso corsa in competizione nello stesso blocco.
 
-### Esito (success / cancel)
-- **Timbro di stato:** badge inclinato -3°, bordo 3px (Melanzana per successo, Scorza per annullo), maiuscolo tracciato.
-- **Pannello:** stesso linguaggio Carta + bordo + timbro-ombra delle product card, per coerenza sistemica.
+### Form (CTA di chiusura)
+Campi scuri (fondo nero quasi o poco più chiaro) con bordo sottile chiaro, label Archivo, placeholder leggibile ad alto contrasto. Submit sempre rosso corsa.
 
 ## 6. Do's and Don'ts
 
 ### Do:
-- **Do** immergere la pagina nell'Arancio Marmellata: il drench è l'identità, non un tema.
-- **Do** usare una sola famiglia tipografica (Archivo) a pesi estremi; il titolo è il visual principale della pagina.
-- **Do** riprodurre il Patch identico su ogni prodotto: è il segno di riconoscimento del catalogo, non un dettaglio decorativo variabile.
+- **Do** alternare rigorosamente dark (brand) e light (prodotto) per sezione: mai un fondo intermedio o un gradiente fra i due.
+- **Do** usare lo slab serif monumentale solo per i titoli da manifesto (hero, CTA di chiusura, titoli di sezione); tutto il resto in Archivo.
+- **Do** trattare il tricolore come accento sottile: divisore, badge, dettaglio sul prodotto sciarpa. Mai un campo colore grande.
+- **Do** riservare il rosso corsa esclusivamente a CTA e badge di rilievo: un solo significato in tutta la pagina.
 - **Do** mantenere il percorso di pagamento serio e ad altissimo contrasto ("The Serious Checkout Rule"): prezzo chiaro, un pulsante per prodotto, esiti senza ambiguità.
 - **Do** garantire WCAG 2.2 AA: contrasto ≥4.5:1, focus visibile, target touch ≥44px, alternativa `prefers-reduced-motion`.
-- **Do** trattare ogni prodotto della griglia con pari peso visivo: stessa struttura di card, stesso trattamento grafico line-art + patch.
+- **Do** trattare ogni prodotto della griglia con pari peso visivo (eccetto il singolo badge di rilievo consentito).
 
 ### Don't:
-- **Don't** sembrare un **tema Shopify generico** da dropshipping: hero anonimo, badge fiducia, recensioni finte (anti-riferimento dichiarato).
-- **Don't** sembrare una **scheda marketplace**: griglie di specifiche, badge, stelline, box venditore, banner sconto (da PRODUCT.md).
-- **Don't** sembrare una **landing SaaS**: gradienti viola, hero con metriche, card identiche a tre colonne, eyebrow tracciati su ogni sezione (da PRODUCT.md).
-- **Don't** sembrare **luxury pretenzioso**: serif dorati, nero+oro, tono solenne da maison (da PRODUCT.md).
-- **Don't** sembrare una **bancarella / discount**: urgenza urlata, countdown, "OFFERTA!!!", prezzi barrati (da PRODUCT.md).
+- **Don't** sembrare **minimal-luxury**: niente serif dorati, niente nero+oro, niente tono solenne da maison.
+- **Don't** sembrare **corporate/SaaS**: niente gradienti, niente card identiche a tre colonne generiche, niente eyebrow tracciati su ogni sezione senza motivo.
+- **Don't** mischiare slab serif e grotesque nello stesso elemento di testo: sono due registri, non due opzioni intercambiabili.
+- **Don't** usare il tricolore come sfondo di sezione o campo colore ampio: resta divisore, badge, dettaglio.
+- **Don't** moltiplicare i bottoni rosso corsa nello stesso blocco visivo: un solo CTA primario per superficie.
 - **Don't** trasformare lo slogan in un riferimento politico reale: resta un formato preso in prestito per un gadget-shop immaginario (da PRODUCT.md).
-- **Don't** privilegiare un prodotto sugli altri nella griglia: nessuna card più grande, nessun badge "bestseller".
-- **Don't** rifugiarsi nei neutri: una pagina beige o bianca con un tocco d'arancio tradisce la strategia Drenched.
-- **Don't** usare gradient text, side-stripe colorate, glassmorphism o numerazioni di sezione decorative (ban assoluti del sistema).
+- **Don't** privilegiare un prodotto sugli altri nella griglia oltre al singolo badge "DROP LIMITATO" concesso.
+- **Don't** usare gradient text, glassmorphism, ombre morbide diffuse o numerazioni di sezione decorative (ban assoluti del sistema).
+</content>
+</invoke>

@@ -1,138 +1,112 @@
-import type { CSSProperties, ReactNode } from "react";
+import Image from "next/image";
 import { PRODUCTS } from "@/lib/products";
 import { ProductCard } from "@/components/ProductCard";
-import { Sticker } from "@/components/Sticker";
-import { Tshirt } from "@/components/Tshirt";
-import { Hoodie } from "@/components/Hoodie";
-import { Cap } from "@/components/Cap";
-import { Scarf } from "@/components/Scarf";
-import { Barcode } from "@/components/Barcode";
-
-const GRAFICHE: Record<string, ReactNode> = {
-  adesivo: <Sticker />,
-  maglietta: <Tshirt />,
-  felpa: <Hoodie />,
-  cappellino: <Cap />,
-  sciarpa: <Scarf />,
-};
+import { ContactForm } from "@/components/ContactForm";
 
 export default function HomePage() {
   return (
     <>
       <header className="testata">
-        <p>Facciamo Italia Grande Ancora</p>
-        <p className="testata-atto">Catalogo ufficiale · dal 2026</p>
+        <Image
+          src="/logo.svg"
+          alt="F.I.G.A."
+          width={128}
+          height={128}
+          className="testata-logo"
+          priority
+        />
       </header>
 
-      <main className="pagina">
-        <section className="hero" aria-labelledby="titolo-brand">
-          <div className="grafica marchio-vetrina">
-            <Sticker />
+      <main>
+        <section className="hero" aria-labelledby="hero-titolo">
+          <div className="hero-testo">
+            <p className="hero-eyebrow">Nuovi Arrivi</p>
+            <h1 id="hero-titolo" className="hero-titolo">
+              Facciamo
+              <br />
+              Italia
+              <br />
+              Grande
+              <br />
+              Ancora.
+            </h1>
+            <p className="hero-sub">
+              Merch patriottico. Ignoranza di qualità, 100% Made in Italy.
+            </p>
+            <a href="#la-roba" className="bottone-primario hero-cta">
+              Compra Ora
+            </a>
           </div>
 
-          <h1 id="titolo-brand" className="hero-titolo">
-            Il Merchandising Ufficiale.
-          </h1>
-
-          <p className="hero-lead">
-            Cinque pezzi, un solo marchio, la stessa faccia tosta di sempre.
-            Nessuna gerarchia tra un adesivo e una felpa: scegli il tuo, un
-            click e sei in cassa.
-          </p>
+          <div className="hero-immagine">
+            <Image
+              src="/hero-image.jpg"
+              alt="Uomo di spalle con felpa nera F.I.G.A."
+              fill
+              sizes="(max-width: 900px) 100vw, 50vw"
+              className="hero-foto"
+              priority
+            />
+          </div>
         </section>
 
-        <section className="prodotti" aria-labelledby="titolo-collezione">
-          <h2 id="titolo-collezione" className="prodotti-titolo">
-            La Collezione.
+        <section
+          className="prodotti"
+          id="la-roba"
+          aria-labelledby="prodotti-titolo"
+        >
+          <h2 id="prodotti-titolo" className="prodotti-titolo">
+            La Roba
           </h2>
+          <div className="tricolore-riga" aria-hidden="true" />
 
           <div className="prodotti-griglia">
-            {PRODUCTS.map((product, index) => (
-              <div
-                key={product.id}
-                className="prodotto-stagger"
-                style={{ "--i": index } as CSSProperties}
-              >
-                <ProductCard product={product} graphic={GRAFICHE[product.id]} />
-              </div>
+            {PRODUCTS.map((product) => (
+              <ProductCard key={product.id} product={product} />
             ))}
           </div>
         </section>
 
-        <section className="dettagli" aria-label="Il manifesto del marchio">
-          <div className="dettagli-griglia">
-            <div className="valori">
-              <h2 className="valori-titolo">Il Manifesto Ufficiale</h2>
-              <p className="valori-sub">valori dichiarati, non certificati</p>
-              <table>
-                <tbody>
-                  <tr>
-                    <th scope="row">Sfacciataggine</th>
-                    <td>98%</td>
-                  </tr>
-                  <tr>
-                    <th scope="row">Ironia patriottica</th>
-                    <td>91%</td>
-                  </tr>
-                  <tr>
-                    <th scope="row">Serietà del progetto</th>
-                    <td>100%</td>
-                  </tr>
-                  <tr>
-                    <th scope="row">Taglie sbagliate</th>
-                    <td>0%</td>
-                  </tr>
-                  <tr>
-                    <th scope="row">Rimpianti</th>
-                    <td>0%</td>
-                  </tr>
-                </tbody>
-              </table>
-              <p className="valori-footnote">
-                Valori dichiarati dalla sede centrale, che coincide con il
-                salotto di casa.
-              </p>
-            </div>
+        <section className="chiusura" aria-labelledby="chiusura-titolo">
+          <h2 id="chiusura-titolo" className="chiusura-titolo">
+            L&rsquo;Italia ti guarda.
+            <br />
+            Vestiti bene.
+          </h2>
+          <p className="chiusura-sub">
+            Hai domande? Vuoi insultarci? Compila il form qui sotto. Ti
+            risponderemo (forse) quando finisce la partita.
+          </p>
 
-            <div className="specifiche">
-              <dl>
-                <div>
-                  <dt>Prodotti in gamma</dt>
-                  <dd>5</dd>
-                </div>
-                <div>
-                  <dt>Fondata</dt>
-                  <dd>2026</dd>
-                </div>
-                <div>
-                  <dt>Sede</dt>
-                  <dd>Italia</dd>
-                </div>
-                <div>
-                  <dt>Restituzioni</dt>
-                  <dd>Su richiesta</dd>
-                </div>
-              </dl>
-              <p className="specifiche-resistenza">
-                Resiste all&rsquo;acqua, al sole, alla lavastoviglie e ai
-                giudizi.
-              </p>
-            </div>
-          </div>
+          <ContactForm />
         </section>
       </main>
 
       <footer className="fondo">
-        <div className="fondo-griglia">
-          <Barcode />
-          <div className="fondo-note">
-            <p>
-              f.i.g.a.® sta per Facciamo Italia Grande Ancora. Non è un
-              programma politico, è una felpa.
-            </p>
-            <p>© 2026 f.i.g.a. · Tutti i diritti riservati, compresi quelli inutili.</p>
-          </div>
+        <div className="tricolore-riga" aria-hidden="true" />
+        <div className="fondo-corpo">
+          <Image
+            src="/logo.svg"
+            alt="F.I.G.A."
+            width={72}
+            height={54}
+            className="fondo-logo"
+          />
+
+          <nav className="fondo-link" aria-label="Link legali">
+            <a href="#">Privacy</a>
+            <a href="#">Terms</a>
+            <a href="#">Shipping</a>
+            <a href="#">Contact</a>
+          </nav>
+
+          <p className="fondo-copy">
+            &copy; 2026 F.I.G.A. Italia. All rights reserved.
+          </p>
         </div>
+        <p className="fondo-tagline">
+          Ignoranza di qualità. 100% Made in Italy.
+        </p>
       </footer>
     </>
   );
