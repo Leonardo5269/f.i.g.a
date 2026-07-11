@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, type ReactNode } from "react";
+import Image from "next/image";
 import type { Product } from "@/lib/products";
 import { formatEuros } from "@/lib/products";
 
@@ -50,9 +51,24 @@ export function ProductCard({ product, graphic }: ProductCardProps) {
     }
   }
 
+  const hasPhotos = product.images && product.images.length > 0;
+
   return (
     <article className="prodotto">
-      <div className="grafica prodotto-grafica">{graphic}</div>
+      <div className="grafica prodotto-grafica">
+        {hasPhotos ? (
+          <Image
+            src={product.images![0]}
+            alt={product.name}
+            fill
+            sizes="(max-width: 768px) 100vw, 50vw"
+            className="prodotto-foto"
+            style={{ objectFit: "cover" }}
+          />
+        ) : (
+          graphic
+        )}
+      </div>
 
       <div className="prodotto-corpo">
         <h3 className="prodotto-nome">{product.name}</h3>

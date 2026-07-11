@@ -251,6 +251,25 @@ h3 {
   width: min(60%, 12rem);
 }
 
+.prodotto-grafica:has(.prodotto-foto) {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 3 / 4;
+  overflow: hidden;
+  border-radius: 2px;
+}
+
+.prodotto-foto {
+  object-fit: cover;
+  transition: transform var(--dur-stato) var(--ease-out-quint);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .prodotto-grafica:hover .prodotto-foto {
+    transform: scale(1.035);
+  }
+}
+
 .prodotto-corpo {
   display: flex;
   flex-direction: column;

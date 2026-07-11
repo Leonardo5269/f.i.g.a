@@ -5,6 +5,7 @@ export interface Product {
   priceCents: number;
   fit: string;
   material: string;
+  images?: string[];
 }
 
 // Fonte di verità del catalogo: prezzo in centesimi (interi) per
@@ -26,6 +27,11 @@ export const PRODUCTS: Product[] = [
     priceCents: 2500,
     fit: "Taglia unica oversize",
     material: "100% cotone",
+    images: [
+      "/maglietta/maglietta-1.png",
+      "/maglietta/maglietta-2.png",
+      "/maglietta/maglietta-3.png",
+    ],
   },
   {
     id: "felpa",
@@ -34,6 +40,12 @@ export const PRODUCTS: Product[] = [
     priceCents: 4500,
     fit: "Taglia unica oversize",
     material: "80% cotone, 20% poliestere",
+    images: [
+      "/felpa/felpa-1.png",
+      "/felpa/felpa-2.png",
+      "/felpa/felpa-3.png",
+      "/felpa/felpa-4.png",
+    ],
   },
   {
     id: "cappellino",
@@ -42,6 +54,12 @@ export const PRODUCTS: Product[] = [
     priceCents: 2000,
     fit: "Taglia unica regolabile",
     material: "Cotone twill",
+    images: [
+      "/cappellino/cappellino-1.png",
+      "/cappellino/cappellino-2.png",
+      "/cappellino/cappellino-3.png",
+      "/cappellino/cappellino-4.png",
+    ],
   },
   {
     id: "sciarpa",
@@ -50,6 +68,12 @@ export const PRODUCTS: Product[] = [
     priceCents: 2200,
     fit: "180 × 20 cm",
     material: "Acrilico jacquard",
+    images: [
+      "/sciarpa/sciarpa-1.png",
+      "/sciarpa/sciarpa-2.png",
+      "/sciarpa/sciarpa-3.png",
+      "/sciarpa/sciarpa-4.png",
+    ],
   },
 ];
 
