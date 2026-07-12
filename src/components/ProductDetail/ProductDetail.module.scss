@@ -1,0 +1,245 @@
+@use "@/sass/variables" as v;
+@use "@/sass/mixins" as m;
+
+// Layout standard: immagine a sinistra, testo a destra; stack sotto tablet.
+.layout {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: clamp(1.5rem, 4vw, 3.5rem);
+  align-items: start;
+
+  @include m.respond-to("tablet") {
+    grid-template-columns: 1fr;
+    gap: v.$xl;
+  }
+}
+
+// Su desktop la foto resta agganciata mentre si scorre il testo.
+.gallery {
+  position: sticky;
+  top: 6rem;
+
+  @include m.respond-to("tablet") {
+    position: static;
+  }
+}
+
+.media {
+  position: relative;
+  aspect-ratio: 4 / 5;
+  width: 100%;
+  background-color: v.$grigio-chiaro;
+  border: 1px solid v.$nero-quasi;
+  overflow: hidden;
+}
+
+.foto {
+  object-fit: cover;
+}
+
+// Badge "avvertimento" in overlay, angolo alto (DESIGN.md).
+.badge {
+  position: absolute;
+  top: v.$xs;
+  left: v.$xs;
+  padding: 0.375rem 0.625rem;
+  font-family: var(--font-body);
+  font-size: 0.6875rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  line-height: 1;
+}
+
+.badgeRilievo {
+  background-color: v.$rosso-corsa;
+  color: v.$bianco-rotto;
+}
+
+.badgeNeutro {
+  background-color: v.$nero-quasi;
+  color: v.$bianco-rotto;
+}
+
+.info {
+  display: flex;
+  flex-direction: column;
+}
+
+.tipo {
+  color: v.$grigio-riga;
+}
+
+// Nome prodotto: Archivo (non un titolo manifesto), non lo slab Graduate.
+.name {
+  margin-top: v.$xs;
+  font-family: var(--font-body);
+  font-size: clamp(1.75rem, 4vw, 2.75rem);
+  font-weight: 800;
+  letter-spacing: 0.01em;
+  line-height: 1.05;
+  text-transform: uppercase;
+}
+
+.priceRow {
+  display: flex;
+  align-items: baseline;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  margin-top: v.$m;
+}
+
+.price {
+  font-size: 1.5rem;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+}
+
+.priceOld {
+  font-size: 1.125rem;
+  font-weight: 500;
+  color: v.$grigio-riga;
+  text-decoration: line-through;
+  font-variant-numeric: tabular-nums;
+}
+
+// Sconto: quieto, mai rosso corsa (riservato all'azione), mai urlato.
+.off {
+  padding: 0.25rem 0.5rem;
+  background-color: rgba(v.$nero-quasi, 0.06);
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  color: v.$nero-quasi;
+}
+
+.description {
+  margin-top: v.$m;
+  max-width: 46ch;
+  font-size: 1.0625rem;
+  line-height: 1.55;
+  color: var(--ink-body);
+}
+
+.field {
+  margin-top: v.$xl;
+}
+
+.fieldLabel {
+  font-family: var(--font-body);
+  font-size: 0.8125rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--ink-title);
+}
+
+.fieldValue {
+  font-weight: 500;
+  letter-spacing: normal;
+  text-transform: none;
+  color: var(--ink-body);
+}
+
+.swatches,
+.sizes {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-top: 0.75rem;
+}
+
+// Quadratino selezionabile: bordo hairline + anello sull'attivo.
+.swatch {
+  width: 2.5rem;
+  height: 2.5rem;
+  padding: 0;
+  border: 1px solid rgba(v.$nero-quasi, 0.35);
+  border-radius: v.$radius;
+  cursor: pointer;
+  transition: box-shadow v.$dur-tocco v.$ease-out-quint;
+}
+
+.swatchActive {
+  box-shadow:
+    0 0 0 2px var(--bg-surface),
+    0 0 0 3px #{v.$nero-quasi};
+}
+
+// Chip taglia: target touch ≥ 44px, attivo = inversione ink.
+.size {
+  min-width: 2.75rem;
+  min-height: 2.75rem;
+  padding: 0 0.75rem;
+  background-color: transparent;
+  border: 1px solid v.$nero-quasi;
+  border-radius: v.$radius;
+  font-family: var(--font-body);
+  font-size: 0.875rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  color: var(--ink-title);
+  cursor: pointer;
+  transition:
+    background-color v.$dur-tocco v.$ease-out-quint,
+    color v.$dur-tocco v.$ease-out-quint;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .size:hover {
+    background-color: rgba(v.$nero-quasi, 0.06);
+  }
+}
+
+.sizeActive,
+.sizeActive:hover {
+  background-color: v.$nero-quasi;
+  color: v.$bianco-rotto;
+}
+
+.material {
+  margin-top: v.$xl;
+  font-size: 0.9375rem;
+  line-height: 1.55;
+  color: var(--ink-body);
+}
+
+.materialLabel {
+  display: block;
+  margin-bottom: 0.25rem;
+  font-family: var(--font-body);
+  font-size: 0.8125rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--ink-title);
+}
+
+// Percorso transazionale: serio. Un solo filled (rosso corsa) + un outline.
+.actions {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  max-width: 24rem;
+  margin-top: v.$xxl;
+
+  // I bottoni sono placeholder disabilitati: non "in progress" ma inattivi.
+  button:disabled {
+    cursor: not-allowed;
+  }
+}
+
+.cartButton {
+  gap: 0.625rem;
+}
+
+.cartIcon {
+  flex: none;
+  font-size: 1.15em;
+}
+
+.note {
+  margin-top: v.$s;
+  font-size: 0.8125rem;
+  color: v.$grigio-riga;
+}

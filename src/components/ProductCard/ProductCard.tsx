@@ -1,100 +1,96 @@
 "use client";
 
 import { useState } from "react";
+import Link from "next/link";
 import Image from "next/image";
 import type { Product } from "@/lib/products";
 import { formatEuros } from "@/lib/products";
-import Button from "@/ui/Button/Button";
+import { cn } from "@/utils/ui";
 import styles from "./ProductCard.module.scss";
-
-interface CheckoutResponse {
-  url?: string;
-  error?: string;
-}
 
 interface ProductCardProps {
   product: Product;
 }
 
 /**
- * Card prodotto: una card = una decisione (PRODUCT.md). Il click apre la
- * Stripe Checkout Session per quel singolo articolo — il prezzo lo risolve
- * il server da lib/products, il client manda solo l'id.
+ * Card prodotto (sezione light). Non è più un pulsante d'acquisto: l'intera
+ * card è un link alla pagina dell'indumento. In hover su un quadratino
+ * colore l'anteprima mostra quella variante (per ora tutte puntano allo
+ * scatto esistente, finché non arrivano le foto per colore).
  */
 export default function ProductCard({ product }: ProductCardProps) {
-  const [loading, setLoading] = useState<boolean>(false);
-  const [error, setError] = useState<string | null>(null);
+  const colors = product.colors ?? [];
+  const [preview, setPreview] = useState<string>(
+    colors[0]?.image ?? product.image,
+  );
 
-  async function handleBuyNow(): Promise<void> {
-    if (loading) return;
-
-    setLoading(true);
-    setError(null);
-
-    try {
-      const response = await fetch("/api/checkout", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ productId: product.id }),
-      });
-
-      const data = (await response.json()) as CheckoutResponse;
-
-      if (!response.ok || !data.url) {
-        throw new Error(
-          data.error ??
-            "Impossibile aprire la cassa. Riprova tra qualche istante.",
-        );
-      }
-
-      window.location.assign(data.url);
-    } catch (err) {
-      setError(
-        err instanceof Error
-          ? err.message
-          : "Errore di rete. Controlla la connessione e riprova.",
-      );
-      setLoading(false);
-    }
-  }
+  const list = product.originalPriceCents;
+  const onSale = list !== undefined && list > product.priceCents;
 
   return (
     <article className={styles.card}>
-      {product.badge && <span className={styles.badge}>{product.badge}</span>}
-
-      <div className={styles.media}>
-        <Image
-          src={product.image}
-          alt={product.name}
-          fill
-          sizes="(max-width: 768px) 100vw, 33vw"
-          className={styles.foto}
-        />
-      </div>
-
-      <div className={styles.body}>
-        <div className={styles.row}>
-          <h3 className={styles.name}>{product.name}</h3>
-          <p className={styles.price}>
-            &euro;{formatEuros(product.priceCents)}
-          </p>
+      <Link
+        href={`/prodotti/${product.id}`}
+        className={styles.link}
+        aria-label={product.name}
+      >
+        <div className={styles.media}>
+          <Image
+            src={preview}
+            alt={product.name}
+            fill
+            sizes="(max-width: 521px) 100vw, (max-width: 1080px) 50vw, 33vw"
+            className={styles.foto}
+          />
         </div>
 
-        <Button
-          variant="outline"
-          block
-          loading={loading}
-          onClick={handleBuyNow}
-        >
-          {loading ? "Attendi…" : "Aggiungi al carrello"}
-        </Button>
+        <div className={styles.body}>
+          {colors.length > 0 && (
+            <ul
+              className={styles.swatches}
+              aria-label={`Colori: ${colors.map((c) => c.name).join(", ")}`}
+            >
+              {colors.map((color) => (
+                <li key={color.name}>
+                  <span
+                    className={styles.swatch}
+                    style={{ background: color.swatch }}
+                    title={color.name}
+                    aria-hidden="true"
+                    onMouseEnter={() => setPreview(color.image)}
+                  />
+                </li>
+              ))}
+            </ul>
+          )}
 
-        {error !== null && (
-          <p className={styles.error} role="alert">
-            {error}
+          {product.badge && (
+            <span
+              className={cn(
+                styles.badge,
+                product.badge.tone === "rilievo"
+                  ? styles.badgeRilievo
+                  : styles.badgeNeutro,
+              )}
+            >
+              {product.badge.label}
+            </span>
+          )}
+
+          <h3 className={styles.name}>{product.name}</h3>
+
+          <p className={styles.priceRow}>
+            <span className={styles.price}>
+              &euro;{formatEuros(product.priceCents)}
+            </span>
+            {onSale && list !== undefined && (
+              <span className={styles.priceOld}>
+                &euro;{formatEuros(list)}
+              </span>
+            )}
           </p>
-        )}
-      </div>
+        </div>
+      </Link>
     </article>
   );
 }

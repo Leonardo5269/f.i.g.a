@@ -1,29 +1,19 @@
 @use "@/sass/variables" as v;
 
 // Card prodotto (sezione light): spigoli vivi, bordo hard nero, niente ombre.
+// L'intera card è un link alla pagina dell'indumento (non più un pulsante).
 .card {
   position: relative;
-  display: flex;
-  flex-direction: column;
-  border: 1px solid v.$nero-quasi;
   background-color: v.$bg-2;
+  border: 1px solid v.$nero-quasi;
 }
 
-// Badge di rilievo ("DROP LIMITATO"): registro etichetta, rosso corsa —
-// l'unico rosso della card (il bottone resta outline, One CTA Color Rule).
-.badge {
-  position: absolute;
-  top: v.$xs;
-  right: v.$xs;
-  z-index: 1;
-  padding: 0.375rem 0.625rem;
-  background-color: v.$rosso-corsa;
-  color: v.$bianco-rotto;
-  font-family: var(--font-body);
-  font-size: 0.6875rem;
-  font-weight: 700;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
+.link {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  color: inherit;
+  text-decoration: none;
 }
 
 .media {
@@ -40,9 +30,9 @@
   transition: transform v.$dur-stato v.$ease-out-quint;
 }
 
-// Zoom leggero solo dove l'hover esiste davvero.
+// Zoom leggero solo dove l'hover esiste davvero (e non in reduced-motion).
 @media (hover: hover) and (pointer: fine) {
-  .media:hover .foto {
+  .link:hover .foto {
     transform: scale(1.035);
   }
 }
@@ -50,15 +40,49 @@
 .body {
   display: flex;
   flex-direction: column;
-  gap: 0.875rem;
+  align-items: flex-start;
+  gap: 0.625rem;
   padding: v.$regular v.$m v.$m;
 }
 
-.row {
+// Quadratini colore: il bordo hairline rende visibile anche il bianco rotto.
+.swatches {
   display: flex;
-  align-items: baseline;
-  justify-content: space-between;
-  gap: v.$xs;
+  flex-wrap: wrap;
+  gap: 0.375rem;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.swatch {
+  display: block;
+  width: 1rem;
+  height: 1rem;
+  border: 1px solid rgba(v.$nero-quasi, 0.35);
+  border-radius: v.$radius;
+}
+
+// "Avvertimento": registro etichetta. Un solo `rilievo` (rosso corsa) per
+// griglia; i `neutro` sono timbri scuri ripetibili senza creare gerarchia.
+.badge {
+  padding: 0.3125rem 0.5rem;
+  font-family: var(--font-body);
+  font-size: 0.6875rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  line-height: 1;
+}
+
+.badgeRilievo {
+  background-color: v.$rosso-corsa;
+  color: v.$bianco-rotto;
+}
+
+.badgeNeutro {
+  background-color: v.$nero-quasi;
+  color: v.$bianco-rotto;
 }
 
 // Nome prodotto: registro Archivo (il global mette Graduate sugli h3 —
@@ -71,15 +95,23 @@
   text-transform: uppercase;
 }
 
+.priceRow {
+  display: flex;
+  align-items: baseline;
+  gap: 0.5rem;
+}
+
 .price {
-  flex: none;
-  font-size: 0.9375rem;
+  font-size: 1rem;
   font-weight: 700;
   font-variant-numeric: tabular-nums;
 }
 
-.error {
-  font-size: 0.8125rem;
-  font-weight: 600;
-  color: v.$rosso-corsa;
+// Listino pre-sconto: barrato, quieto (mai un banner "OFFERTA").
+.priceOld {
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: v.$grigio-riga;
+  text-decoration: line-through;
+  font-variant-numeric: tabular-nums;
 }
