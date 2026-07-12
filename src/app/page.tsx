@@ -40,7 +40,7 @@ export default function HomePage() {
 
           <div className="hero-immagine">
             <Image
-              src="/hero-image.jpg"
+              src="/hero.jpg"
               alt="Uomo di spalle con felpa nera F.I.G.A."
               fill
               sizes="(max-width: 900px) 100vw, 50vw"
