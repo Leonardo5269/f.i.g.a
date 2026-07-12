@@ -1,0 +1,49 @@
+@use "@/sass/variables" as v;
+
+// Campo newsletter su fondo scuro (DESIGN.md: campi dark, bordo sottile
+// chiaro, submit rosso corsa — il bottone usa la classe globale .btn-1xs).
+.send-emails {
+  form {
+    position: relative;
+
+    input {
+      width: 100%;
+      padding: v.$xs 66px v.$xs v.$regular;
+      font-size: 1rem;
+      line-height: 1;
+      background-color: v.$nero-quasi;
+      color: v.$bianco-rotto;
+      border-radius: v.$radius;
+      font-weight: 400;
+      outline: none;
+      border: 1px solid v.$grigio-riga;
+      transition: border-color v.$dur-tocco v.$ease-out-quint;
+
+      &::placeholder {
+        color: v.$grigio-chiaro;
+      }
+      &:hover,
+      &:focus {
+        border-color: v.$bianco-rotto;
+      }
+    }
+
+    button[type="submit"] {
+      position: absolute;
+      right: 6px;
+      top: 50%;
+      transform: translateY(-50%);
+    }
+  }
+
+  .error-msg {
+    font-size: v.$s;
+    margin-top: 4px;
+    color: v.$errore;
+  }
+  .success-msg {
+    font-size: v.$s;
+    margin-top: 4px;
+    color: v.$bianco-rotto;
+  }
+}

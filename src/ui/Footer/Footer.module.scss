@@ -1,0 +1,113 @@
+@use "@/sass/variables" as v;
+@use "@/sass/mixins" as m;
+
+// Footer dark (momento brand): bordo superiore tricolore, colonne, riga legale.
+.footer {
+  .corpo {
+    padding-block: v.$xxl v.$xl;
+  }
+
+  .columns {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: v.$xxl v.$xxxl;
+
+    .main {
+      max-width: 350px;
+
+      .tagline {
+        margin-top: v.$xs;
+      }
+
+      // Socials (blocco commentato nel TSX, pronto per i profili reali).
+      .socials {
+        display: flex;
+        gap: v.$xs;
+
+        .circle {
+          width: 36px;
+          font-size: v.$m;
+          color: v.$bianco-rotto;
+          background-color: transparent;
+          border: 1px solid v.$grigio-riga;
+          transition: border-color v.$dur-tocco v.$ease-out-quint;
+
+          &:hover {
+            border-color: v.$bianco-rotto;
+          }
+        }
+      }
+    }
+
+    .routes {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 92px;
+
+      .col {
+        max-width: 175px;
+        width: fit-content;
+
+        .heading {
+          color: var(--ink-title);
+        }
+
+        ul.contacts-list {
+          li {
+            display: inline-flex;
+            gap: v.$xs;
+
+            svg {
+              margin-top: 4.5px;
+              flex-shrink: 0;
+              color: v.$bianco-rotto;
+            }
+          }
+        }
+      }
+    }
+  }
+
+  hr {
+    height: 1px;
+    background-color: v.$grigio-riga;
+    border: none;
+    transform: scaleY(0.5);
+    transform-origin: top;
+  }
+
+  .line {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    flex-wrap: wrap;
+    gap: v.$regular;
+  }
+
+  // Nav legale: registro etichetta su fondo scuro.
+  .legal {
+    display: flex;
+    flex-wrap: wrap;
+    gap: v.$m;
+
+    a {
+      color: var(--ink-title);
+      font-size: 0.75rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+
+      &:hover {
+        text-decoration: underline;
+        text-underline-offset: 4px;
+      }
+    }
+  }
+
+  @include m.respond-to("mobile") {
+    .columns .routes {
+      gap: v.$xxxl;
+    }
+  }
+}

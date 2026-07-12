@@ -1,0 +1,15 @@
+@use "@/sass/variables" as v;
+
+.card {
+  background: v.$bg-2;
+  border: 1px solid v.$border-color;
+  border-radius: v.$radius-l;
+}
+
+.interactive {
+  transition: transform v.$dur-stato v.$ease-out-quint;
+
+  &:hover {
+    transform: translateY(-4px);
+  }
+}

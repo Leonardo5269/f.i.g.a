@@ -1,0 +1,63 @@
+// ============================================================
+// f.i.g.a — "Il Manifesto da Stadio"
+// Token da DESIGN.md (fonte di verità). I nomi semantici del
+// sistema restano come alias della palette brand, così i
+// moduli esistenti compilano invariati.
+// ============================================================
+
+// — Brand
+$verde-bandiera: #008c45; // accento: tricolore, timbro — mai campiture larghe
+$bianco-rotto: #f4f5f0; // fondo sezioni prodotto (light)
+$rosso-bandiera: #cd212a; // ultimo terzo del tricolore + hover del CTA
+$rosso-corsa: #d40000; // SOLO CTA e badge di rilievo (One CTA Color Rule)
+$nero-quasi: #0d0d0d; // fondo sezioni brand (dark)
+$grigio-riga: #4d4d4d; // bordi/divisori su dark
+$grigio-chiaro: #d9d9d4; // testo secondario su dark, superfici neutre
+$errore: #ffb4b4; // testo errore su dark (su light usare $rosso-corsa)
+
+// — Primary & accent (alias semantici)
+$primary: $rosso-corsa;
+$secondary: $verde-bandiera;
+$primary-hover: $rosso-bandiera;
+
+// — Titles: un solo inchiostro su light; su dark decide la classe .dark
+//   tramite le custom property (--ink-*), vedi _class.scss.
+$l-title-color: $nero-quasi;
+$title-color: $nero-quasi;
+$s-title-color: $nero-quasi;
+
+// — Paragraphs
+$l-p-color: $nero-quasi;
+$p-color: $nero-quasi;
+
+// — Backgrounds
+$bg-1a: $bianco-rotto; // body / base light
+$bg-1b: $grigio-chiaro; // backdrop foto, pannelli tenui
+$bg-1c: $grigio-chiaro;
+$bg-2: $bianco-rotto; // superfici card (il rilievo lo dà il bordo, non la tinta)
+$bg-3: $bianco-rotto; // niente bianco puro in palette
+
+// — UI
+$ui-small-color: $grigio-riga;
+$border-color: $grigio-chiaro; // hairline su light; i bordi hard sono $nero-quasi nei moduli
+$s-shadow: none; // DESIGN.md vieta le soft shadow
+
+// — Radii: solo spigoli vivi o "sharp" (DESIGN.md)
+$radius: 2px; // bottoni, input, badge
+$radius-l: 0; // card e superfici: squadrate
+$radius-xl: 0;
+
+// — Motion
+$ease-out-quint: cubic-bezier(0.22, 1, 0.36, 1);
+$dur-tocco: 150ms; // feedback al tocco (hover/press)
+$dur-stato: 250ms; // cambi di stato più ampi
+
+$xxs: 8px; // .5rem
+$xs: 12px; // .75rem
+$s: 14px; // .875rem
+$regular: 16px; // 1rem
+$m: 20px; // 1.25rem
+$l: 22px; // 1.375rem
+$xl: 24px; // 1.5rem
+$xxl: 32px; // 2rem
+$xxxl: 52px; // Spacing sections

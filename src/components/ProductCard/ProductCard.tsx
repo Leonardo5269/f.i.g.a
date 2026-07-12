@@ -4,6 +4,8 @@ import { useState } from "react";
 import Image from "next/image";
 import type { Product } from "@/lib/products";
 import { formatEuros } from "@/lib/products";
+import Button from "@/ui/Button/Button";
+import styles from "./ProductCard.module.scss";
 
 interface CheckoutResponse {
   url?: string;
@@ -14,7 +16,12 @@ interface ProductCardProps {
   product: Product;
 }
 
-export function ProductCard({ product }: ProductCardProps) {
+/**
+ * Card prodotto: una card = una decisione (PRODUCT.md). Il click apre la
+ * Stripe Checkout Session per quel singolo articolo — il prezzo lo risolve
+ * il server da lib/products, il client manda solo l'id.
+ */
+export default function ProductCard({ product }: ProductCardProps) {
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
 
@@ -35,7 +42,8 @@ export function ProductCard({ product }: ProductCardProps) {
 
       if (!response.ok || !data.url) {
         throw new Error(
-          data.error ?? "Impossibile aprire la cassa. Riprova tra qualche istante."
+          data.error ??
+            "Impossibile aprire la cassa. Riprova tra qualche istante.",
         );
       }
 
@@ -44,44 +52,45 @@ export function ProductCard({ product }: ProductCardProps) {
       setError(
         err instanceof Error
           ? err.message
-          : "Errore di rete. Controlla la connessione e riprova."
+          : "Errore di rete. Controlla la connessione e riprova.",
       );
       setLoading(false);
     }
   }
 
   return (
-    <article className="prodotto">
-      {product.badge && <span className="prodotto-badge">{product.badge}</span>}
+    <article className={styles.card}>
+      {product.badge && <span className={styles.badge}>{product.badge}</span>}
 
-      <div className="prodotto-foto-wrap">
+      <div className={styles.media}>
         <Image
           src={product.image}
           alt={product.name}
           fill
           sizes="(max-width: 768px) 100vw, 33vw"
-          className="prodotto-foto"
+          className={styles.foto}
         />
       </div>
 
-      <div className="prodotto-corpo">
-        <div className="prodotto-riga">
-          <h3 className="prodotto-nome">{product.name}</h3>
-          <p className="prodotto-prezzo">&euro;{formatEuros(product.priceCents)}</p>
+      <div className={styles.body}>
+        <div className={styles.row}>
+          <h3 className={styles.name}>{product.name}</h3>
+          <p className={styles.price}>
+            &euro;{formatEuros(product.priceCents)}
+          </p>
         </div>
 
-        <button
-          type="button"
-          className="prodotto-bottone"
+        <Button
+          variant="outline"
+          block
+          loading={loading}
           onClick={handleBuyNow}
-          disabled={loading}
-          aria-busy={loading}
         >
-          {loading ? "ATTENDI…" : "AGGIUNGI AL CARRELLO"}
-        </button>
+          {loading ? "Attendi…" : "Aggiungi al carrello"}
+        </Button>
 
         {error !== null && (
-          <p className="prodotto-errore" role="alert">
+          <p className={styles.error} role="alert">
             {error}
           </p>
         )}

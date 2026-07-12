@@ -1,0 +1,199 @@
+@forward "./class";
+@use "./variables" as v;
+@use "./mixins" as m;
+
+:root {
+  // Tema light (default). Le sezioni brand fanno opt-in con la classe .dark
+  // (vedi _class.scss), che ri-scopa queste custom property.
+  --bg-surface: #{v.$bianco-rotto};
+  --ink-title: #{v.$nero-quasi};
+  --ink-body: #{v.$nero-quasi};
+  --ink-muted: #{v.$grigio-riga};
+  --line: #{v.$grigio-chiaro};
+  --line-strong: #{v.$nero-quasi};
+
+  --gutter: clamp(1.25rem, 4.5vw, 3.5rem);
+  --ease-out-quint: #{v.$ease-out-quint};
+  --dur-tocco: #{v.$dur-tocco};
+  --dur-stato: #{v.$dur-stato};
+}
+
+html {
+  scroll-behavior: smooth;
+  -webkit-text-size-adjust: 100%;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  min-height: 100dvh;
+  display: flex;
+  flex-direction: column;
+  overflow-x: hidden;
+  font-family: var(--font-body);
+  background-color: var(--bg-surface);
+  color: var(--ink-body);
+  line-height: 1.5;
+  -webkit-tap-highlight-color: transparent;
+  &.no-scroll {
+    overflow: hidden;
+  }
+}
+
+// Le pagine brevi (es. esiti checkout) si centrano senza magic number.
+main {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+// Ancore (#la-roba) non finiscono sotto la navbar sticky.
+[id] {
+  scroll-margin-top: 5rem;
+}
+
+::selection {
+  background-color: v.$rosso-corsa;
+  color: v.$bianco-rotto;
+}
+
+:focus-visible {
+  outline: 3px solid v.$rosso-corsa;
+  outline-offset: 3px;
+}
+
+// Two-register rule (DESIGN.md): la slab (Graduate) è solo dei titoli
+// manifesto, sempre maiuscoli. h4–h6 restano in Archivo.
+h1,
+h2,
+h3 {
+  font-family: var(--font-title);
+  text-transform: uppercase;
+  text-wrap: balance;
+}
+
+// Display manifesto (hero, chiusura).
+.text-h1 {
+  color: var(--ink-title);
+  font-size: clamp(2.75rem, 9vw, 6rem);
+  font-weight: 400;
+  letter-spacing: -0.01em;
+  line-height: 0.95;
+}
+
+// Titolo di sezione: sempre con riga tricolore sotto (la mette il chiamante).
+.text-h2 {
+  color: var(--ink-title);
+  font-size: clamp(1.875rem, 4.5vw, 3rem);
+  font-weight: 400;
+  line-height: 1.15;
+}
+.text-h3 {
+  color: var(--ink-title);
+  font-size: clamp(1.6rem, 4vw, 2.5rem);
+  font-weight: 400;
+  line-height: 1.15;
+}
+.text-h4 {
+  color: var(--ink-title);
+  font-size: v.$xl;
+  font-weight: 700;
+  line-height: 1.2;
+}
+.text-h5 {
+  color: var(--ink-title);
+  font-size: v.$l;
+  font-weight: 700;
+  line-height: 1.2;
+}
+.text-h6 {
+  color: var(--ink-title);
+  font-size: v.$m;
+  font-weight: 700;
+  line-height: 1.2;
+}
+p,
+ul,
+span {
+  line-height: 1.55;
+  font-weight: 500;
+  &.large {
+    font-size: clamp(1.125rem, 3vw, v.$l);
+    line-height: 1.55;
+    color: var(--ink-body);
+  }
+  &.medium {
+    font-size: clamp(1.125rem, 3vw, v.$m);
+    line-height: 1.55;
+    color: var(--ink-body);
+  }
+  &.small {
+    line-height: 1.1;
+    font-size: v.$s;
+  }
+}
+span {
+  line-height: inherit;
+}
+
+// Eyebrow: registro etichetta sopra i titoli manifesto.
+.eyebrow {
+  display: block;
+  font-family: var(--font-body);
+  font-size: 0.8125rem;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  line-height: 1;
+  color: var(--ink-title);
+}
+
+a {
+  text-decoration: none;
+  color: var(--ink-body);
+  &.simple-link {
+    color: var(--ink-body);
+    transition: color v.$dur-tocco v.$ease-out-quint;
+    &:hover {
+      color: var(--ink-title);
+      text-decoration: underline;
+    }
+  }
+  &.simple-link-2 {
+    color: var(--ink-body);
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+  &.simple-link-3 {
+    text-decoration: underline;
+    &:hover {
+      text-decoration: none;
+    }
+  }
+}
+
+ul {
+  list-style-position: inside;
+  &.no-style {
+    list-style: none;
+  }
+}
+
+// Accessibilità: chi chiede meno movimento non riceve transizioni/animazioni.
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
+    transition-duration: 0.01ms !important;
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+  }
+}

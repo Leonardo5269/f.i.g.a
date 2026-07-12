@@ -1,12 +1,14 @@
 import type { Metadata, Viewport } from "next";
 import type { ReactNode } from "react";
 import { Archivo, Graduate } from "next/font/google";
-import "./globals.css";
+import Navbar from "@/ui/Navbar/Navbar";
+import Footer from "@/ui/Footer/Footer";
+import "@/sass/_global.scss";
 
 const archivo = Archivo({
   subsets: ["latin"],
   display: "swap",
-  variable: "--font-archivo",
+  variable: "--font-body",
   axes: ["wdth"],
 });
 
@@ -14,7 +16,7 @@ const graduate = Graduate({
   subsets: ["latin"],
   display: "swap",
   weight: "400",
-  variable: "--font-graduate",
+  variable: "--font-title",
 });
 
 export const metadata: Metadata = {
@@ -34,7 +36,11 @@ interface RootLayoutProps {
 export default function RootLayout({ children }: RootLayoutProps) {
   return (
     <html lang="it" className={`${archivo.variable} ${graduate.variable}`}>
-      <body>{children}</body>
+      <body>
+        <Navbar />
+        {children}
+        <Footer />
+      </body>
     </html>
   );
 }

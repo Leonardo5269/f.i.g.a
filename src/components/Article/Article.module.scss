@@ -1,0 +1,18 @@
+@use '@/sass/variables' as v;
+@use '@/sass/mixins' as m;
+
+.article {
+  display: flex;
+  row-gap: v.$xl;
+}
+
+.textContainer {
+  display: flex;
+  flex-direction: column;
+  row-gap: v.$xs;
+}
+
+.imgWrapper {
+  display: flex;
+  flex: 1 1 auto;
+}

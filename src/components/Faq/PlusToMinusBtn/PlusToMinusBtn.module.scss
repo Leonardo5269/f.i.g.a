@@ -1,0 +1,33 @@
+@use "@/sass/variables" as v;
+
+.plus-to-minus-btn {
+  cursor: pointer;
+  color: v.$primary;
+  background-color: v.$bg-2;
+  min-width: 36px;
+  font-size: v.$m;
+  display: grid;
+  place-content: center;
+  border: none;
+  border-radius: 6px;
+  aspect-ratio: 1 / 1;
+  transition: color 0.2s;
+
+  &:hover {
+    color: v.$primary-hover;
+  }
+
+  .line-v {
+    transform-origin: 7px 7px;
+    transition:
+      transform 0.25s cubic-bezier(0.4, 0, 0.2, 1),
+      opacity 0.2s ease;
+  }
+
+  &.active {
+    .line-v {
+      transform: scaleY(0) rotate(90deg);
+      opacity: 0;
+    }
+  }
+}

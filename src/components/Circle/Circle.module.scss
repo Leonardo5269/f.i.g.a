@@ -1,0 +1,11 @@
+@use "@/sass/variables" as v;
+
+.circle {
+  display: grid;
+  place-content: center;
+  border-radius: 100%;
+  aspect-ratio: 1 / 1;
+  svg {
+    margin-top: 0;
+  }
+}

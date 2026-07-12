@@ -1,0 +1,14 @@
+@use "@/sass/variables" as v;
+
+.under-costruction {
+  min-height: 500px;
+  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  svg {
+    color: v.$primary;
+    font-size: v.$xxl;
+  }
+}

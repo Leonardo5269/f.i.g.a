@@ -1,0 +1,61 @@
+@use "@/sass/variables" as v;
+@use "@/sass/mixins" as m;
+
+// Form su sezione dark (DESIGN.md): campi neri con bordo sottile chiaro,
+// submit rosso corsa — l'unico CTA della superficie.
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: v.$regular;
+  max-width: 34rem;
+  margin: v.$xxl auto 0;
+  text-align: left;
+}
+
+.riga {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: v.$regular;
+
+  @include m.respond-to(560px) {
+    grid-template-columns: 1fr;
+  }
+}
+
+.campo {
+  width: 100%;
+  padding: 0.875rem 1rem;
+  border: 1px solid v.$grigio-riga;
+  border-radius: v.$radius;
+  background-color: v.$nero-quasi;
+  color: v.$bianco-rotto;
+  font-family: var(--font-body);
+  font-size: 0.9375rem;
+  letter-spacing: 0.02em;
+
+  &::placeholder {
+    color: v.$grigio-chiaro;
+    text-transform: uppercase;
+    font-size: 0.8125rem;
+    letter-spacing: 0.08em;
+  }
+}
+
+.textarea {
+  resize: vertical;
+  min-height: 8rem;
+}
+
+.invia {
+  align-self: center;
+  min-width: 10rem;
+}
+
+.conferma {
+  max-width: 34rem;
+  margin: v.$xxl auto 0;
+  padding: v.$regular;
+  border: 1px solid v.$grigio-riga;
+  font-size: 0.9375rem;
+  font-weight: 600;
+}

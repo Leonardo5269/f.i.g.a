@@ -1,0 +1,144 @@
+@use "@/sass/variables" as v;
+@use "@/sass/mixins" as m;
+
+// L'header sta dentro `.wrapper`, che usa un gutter responsive via
+// margin-inline (3rem sotto i 1232px, 20px sotto i 522px). Il pannello mobile
+// dei link esce dal wrapper (`position: absolute; width: 100%`), quindi per
+// allinearsi al logo riusa gli stessi valori come padding orizzontale.
+
+nav.navbar {
+  // Momento brand (DESIGN.md): barra sempre su nero quasi, nessuno stato
+  // trasparente. `--nav-bg` resta il canale condiviso con il pannello mobile.
+  --nav-bg: #{v.$nero-quasi};
+
+  .tablet-vp {
+    display: none;
+  }
+  top: 0;
+  position: sticky;
+  z-index: 10;
+  background: var(--nav-bg);
+  padding-block: 12px;
+  border-bottom: 1px solid transparent;
+  transition: border-color v.$dur-stato v.$ease-out-quint;
+
+  // Appena si scorre, un bordo sottile stacca la barra dal contenuto
+  // (niente ombre: vietate da DESIGN.md).
+  &.scrolled {
+    border-bottom-color: v.$grigio-riga;
+  }
+
+  :global(.wrapper) {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    .nav-container {
+      ul.link-pages {
+        display: flex;
+        align-items: center;
+        gap: 80px;
+        list-style: none;
+
+        // Solo i link di navigazione (registro etichetta su fondo scuro);
+        // le CTA (Button) tengono il loro stile.
+        li:not(.cta-mobile) a {
+          color: v.$bianco-rotto;
+          font-size: 0.8125rem;
+          font-weight: 700;
+          letter-spacing: 0.14em;
+          text-transform: uppercase;
+          transition: color v.$dur-tocco v.$ease-out-quint;
+
+          &:hover {
+            text-decoration: underline;
+            text-underline-offset: 4px;
+          }
+        }
+
+        // Le CTA vivono nel pannello mobile: nascoste su desktop.
+        .cta-mobile {
+          display: none;
+        }
+      }
+    }
+
+    .cta-desktop {
+      display: flex;
+      align-items: center;
+      gap: v.$xs;
+    }
+
+    @include m.respond-to("tablet") {
+      .cta-desktop {
+        display: none;
+      }
+      .tablet-vp {
+        display: block;
+      }
+
+      .nav-container {
+        width: auto;
+
+        ul.link-pages {
+          margin-top: 25px; // Nav height
+          position: absolute;
+          left: 0;
+          flex-direction: column;
+          justify-content: start;
+          align-items: start;
+          background: var(--nav-bg);
+          width: 100%;
+          // Padding orizzontale = gutter del wrapper. `.wrapper` usa
+          // margin-inline 3rem (<1232px) e 20px (<522px): riusiamo gli stessi
+          // valori così i link del pannello restano allineati al logo.
+          padding-block: v.$xxl calc(2 * v.$m);
+          padding-inline: 3rem;
+          overflow: hidden;
+
+          // Il pannello copre lo schermo e scivola da sinistra con fade-in.
+          // Altezza e gap sono costanti: animiamo solo transform + opacity,
+          // così scivola da sinistra verso destra invece di "crescere".
+          height: 90dvh;
+          gap: v.$xxl;
+          transform: translateX(-100%);
+          opacity: 0;
+          visibility: hidden;
+          pointer-events: none;
+          transition:
+            transform 0.4s ease-out,
+            opacity 0.35s ease-out,
+            visibility 0.4s ease;
+
+          @include m.respond-to("mobile") {
+            padding-inline: v.$m;
+          }
+
+          // Nel pannello mobile le CTA tornano visibili: i due Button vivono
+          // nello stesso <li>, affiancati con 12px di gap (come su desktop).
+          .cta-mobile {
+            display: flex;
+            align-items: center;
+            gap: v.$xs;
+          }
+
+          // Aperto: scivola in posizione (sinistra → destra) e appare.
+          &.show {
+            transform: translateX(0);
+            opacity: 1;
+            visibility: visible;
+            pointer-events: all;
+          }
+
+          // Chiuso: esce di nuovo verso sinistra e svanisce.
+          &.hide {
+            transform: translateX(-100%);
+            opacity: 0;
+            visibility: hidden;
+            pointer-events: none;
+          }
+        }
+      }
+    }
+  }
+}

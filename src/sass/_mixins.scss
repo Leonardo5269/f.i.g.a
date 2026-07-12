@@ -1,0 +1,105 @@
+@use "sass:list";
+@use "sass:color";
+@use "@/sass/variables" as v;
+
+@mixin respond-to($breakpoint) {
+  @if $breakpoint == "mobile" {
+    @media (max-width: 521px) {
+      @content;
+    }
+  } @else if $breakpoint == "tablet" {
+    @media (max-width: 1080px) {
+      @content;
+    }
+  } @else if $breakpoint == "desktop" {
+    @media (max-width: 1280px) {
+      @content;
+    }
+  } @else {
+    @media (max-width: $breakpoint) {
+      @content;
+    }
+  }
+}
+
+// Genera le varianti .btn-* nel registro f.i.g.a: uppercase, spigoli 2px,
+// niente ombre né pillole (DESIGN.md).
+// - "filled"    → CTA rosso corsa, hover rosso bandiera (unico per superficie)
+// - "outline"   → trasparente con bordo ink; hover a inversione. Legge le
+//                 custom property del tema, quindi si adatta alle sezioni .dark
+// - "secondary" → bottone "ink" serio (es. esiti checkout); hover rosso corsa
+@mixin button-props(
+  $variant,
+  $font-size,
+  $padding,
+  $color: v.$primary,
+  $border-width: 1px
+) {
+  $pad-top: list.nth($padding, 1);
+  $pad-side: list.nth($padding, 1);
+  @if list.length($padding) >= 2 {
+    $pad-side: list.nth($padding, 2);
+  }
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-body);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  font-size: $font-size;
+  text-align: center;
+  text-decoration: none;
+  cursor: pointer;
+  border-radius: v.$radius;
+  transition:
+    background-color v.$dur-tocco v.$ease-out-quint,
+    color v.$dur-tocco v.$ease-out-quint,
+    border-color v.$dur-tocco v.$ease-out-quint;
+
+  @if $variant == "filled" {
+    color: v.$bianco-rotto;
+    background-color: $color;
+    border: none;
+    padding: $pad-top $pad-side;
+
+    &:hover:not(:disabled):not(.loading) {
+      background-color: v.$primary-hover;
+    }
+  } @else if $variant == "outline" {
+    color: var(--ink-title);
+    background-color: transparent;
+    border: $border-width solid var(--line-strong);
+    padding: calc(#{$pad-top} - #{$border-width})
+      calc(#{$pad-side} - #{$border-width});
+
+    &:hover:not(:disabled):not(.loading) {
+      background-color: var(--ink-title);
+      color: var(--bg-surface);
+    }
+  } @else if $variant == "secondary" {
+    color: var(--bg-surface);
+    background-color: var(--ink-title);
+    border: none;
+    padding: $pad-top $pad-side;
+
+    &:hover:not(:disabled):not(.loading) {
+      background-color: v.$rosso-corsa;
+      color: v.$bianco-rotto;
+    }
+  }
+
+  &:disabled,
+  &.loading {
+    cursor: progress;
+    opacity: 0.6;
+  }
+}
+
+@function opposite-lightness($color) {
+  $hue: color.channel($color, "hue", $space: hsl);
+  $saturation: color.channel($color, "saturation", $space: hsl);
+  $lightness: color.channel($color, "lightness", $space: hsl);
+  @return hsl($hue, $saturation, 100% - $lightness);
+}

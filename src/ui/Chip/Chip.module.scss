@@ -1,0 +1,23 @@
+@use "@/sass/variables" as v;
+
+.chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.3rem 0.6rem;
+  border-radius: v.$radius;
+  background: v.$bg-1a;
+  border: 1px solid v.$border-color;
+  color: v.$l-p-color;
+  font-family: var(--font-body), sans-serif;
+  font-size: 0.75rem;
+  font-weight: 500;
+  letter-spacing: 0.2px;
+  white-space: nowrap;
+}
+
+.icon {
+  display: inline-flex;
+  font-size: 0.85rem;
+  color: v.$primary;
+}

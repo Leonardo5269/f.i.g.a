@@ -1,0 +1,73 @@
+@use "@/sass/variables" as v;
+@use "@/sass/mixins" as m;
+
+.dropdown-menu {
+  position: relative;
+  font-weight: 500;
+  font-size: 1rem;
+
+  button {
+    font: 1rem var(--font-poppins);
+    background-color: transparent;
+    cursor: pointer;
+    outline: none;
+    font-weight: 600;
+  }
+
+  button.selected-item {
+    border: none;
+    transition: 0.15s;
+    svg {
+      transition: 0.1s;
+      vertical-align: middle;
+      font-size: v.$xs;
+
+      &.open {
+        transform: rotate(-90deg);
+      }
+    }
+    &:hover {
+      color: v.$primary-hover;
+    }
+    &.open {
+      color: v.$primary-hover;
+    }
+  }
+
+  ul.items {
+    z-index: 9999;
+    $padding-y: 0.3em;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    margin-top: v.$xxs;
+    border-radius: 4px;
+    min-width: 150px;
+    padding-block: $padding-y;
+    background-color: v.$bg-2;
+    color: v.$p-color;
+    list-style: none;
+    font: 1rem var(--font-poppins);
+
+    transition: 0.2s;
+    transform: translateY(-4px);
+    opacity: 0;
+    pointer-events: none;
+
+    &.open {
+      opacity: 1;
+      transform: translateY(0);
+      pointer-events: auto;
+    }
+
+    li a {
+      display: block;
+      transition: 0.1s;
+      padding: calc($padding-y * 2) 0.6em;
+
+      &:hover {
+        color: v.$primary-hover;
+      }
+    }
+  }
+}

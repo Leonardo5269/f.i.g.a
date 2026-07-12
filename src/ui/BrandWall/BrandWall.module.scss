@@ -1,0 +1,47 @@
+@use "@/sass/variables" as v;
+@use "@/sass/mixins" as m;
+
+// Muro loghi: i brand si distribuiscono in riga con `space-between`. Il
+// max-width evita che, con pochi loghi, le colonne si allontanino troppo;
+// il `gap` fa da spaziatura minima tra colonne e regola l'a-capo dei brand
+// che non entrano nella riga.
+.wall {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: v.$xl v.$xxxl; // riga 24px · colonna minima 32px
+  max-width: 990px;
+  margin-inline: auto;
+  list-style: none;
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+}
+
+// Fallback testuale quando manca il logo: nome del brand in nero, alla
+// dimensione della reference. La misura è fissa (non scala con il viewport):
+// se non entra in riga, il brand va a capo grazie al flex-wrap di `.wall`.
+.name {
+  font-family: var(--font-body);
+  font-weight: 700;
+  font-size: 2.25rem; // ~36px, come da immagine allegata
+  color: v.$nero-quasi;
+  white-space: nowrap;
+}
+
+// Box del logo (quando presente): `fill` + `contain` scala il marchio
+// mantenendone le proporzioni, senza distorsioni.
+.logo {
+  position: relative;
+  display: block;
+  width: clamp(130px, 16vw, 170px);
+  height: 48px;
+
+  @include m.respond-to("mobile") {
+    width: clamp(110px, 40vw, 150px);
+    height: 40px;
+  }
+}

@@ -1,0 +1,50 @@
+@use "@/sass/variables" as v;
+@use "@/sass/mixins" as m;
+
+// Momento brand: manifesto dark a tutta larghezza, due colonne (testo + foto).
+.hero {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  align-items: stretch;
+
+  @include m.respond-to(900px) {
+    grid-template-columns: 1fr;
+  }
+}
+
+.testo {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  gap: v.$m;
+  padding: clamp(2.5rem, 6vw, 4.5rem) var(--gutter);
+
+  // Sul manifesto a due colonne il display token pieno (9vw) sborderebbe:
+  // stessa taratura del titolo hero originale.
+  h1 {
+    font-size: clamp(2.75rem, 6.5vw, 4.75rem);
+  }
+}
+
+.sub {
+  max-width: 34ch;
+  text-wrap: pretty;
+}
+
+.cta {
+  margin-top: v.$xxs;
+}
+
+.immagine {
+  position: relative;
+
+  @include m.respond-to(900px) {
+    min-height: 22rem;
+  }
+}
+
+.foto {
+  object-fit: cover;
+  object-position: center 20%;
+}

@@ -1,5 +1,4 @@
-import Link from "next/link";
-import Image from "next/image";
+import Esito from "@/ui/Esito/Esito";
 
 interface SuccessPageProps {
   // In Next.js 15+ searchParams è una Promise (rendering dinamico).
@@ -12,37 +11,23 @@ export default async function SuccessPage({ searchParams }: SuccessPageProps) {
     typeof params.session_id === "string" ? params.session_id : null;
 
   return (
-    <>
-      <header className="testata">
-        <Image src="/logo.svg" alt="F.I.G.A." width={52} height={52} className="testata-logo" />
-      </header>
-
-      <main className="esito">
-        <div className="esito-pannello">
-          <p className="timbro">Pratica approvata</p>
-          <h1 className="esito-titolo">Pagamento riuscito.</h1>
-          <p className="esito-testo">
-            Il tuo pezzo è ufficialmente ordinato. Stripe ti ha inviato
-            l&rsquo;email di conferma; la spedizione parte entro 5 giorni
-            lavorativi.
-          </p>
-
-          {sessionId !== null && (
-            <p className="esito-rif">
-              <strong>Riferimento del pagamento</strong>
-              {sessionId}
-            </p>
-          )}
-
-          <Link href="/" className="esito-azione">
-            Torna al catalogo
-          </Link>
-
-          <p className="esito-chiosa">
-            La sede centrale ha timbrato senza nemmeno leggere.
-          </p>
-        </div>
-      </main>
-    </>
+    <main>
+      <Esito
+        stamp="Pratica approvata"
+        title="Pagamento riuscito."
+        reference={
+          sessionId !== null
+            ? { label: "Riferimento del pagamento", value: sessionId }
+            : undefined
+        }
+        actionHref="/"
+        actionLabel="Torna al catalogo"
+        chiosa="La sede centrale ha timbrato senza nemmeno leggere."
+      >
+        Il tuo pezzo è ufficialmente ordinato. Stripe ti ha inviato
+        l&rsquo;email di conferma; la spedizione parte entro 5 giorni
+        lavorativi.
+      </Esito>
+    </main>
   );
 }

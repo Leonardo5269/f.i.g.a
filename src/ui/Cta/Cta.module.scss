@@ -1,0 +1,32 @@
+@use "@/sass/variables" as v;
+@use "@/sass/mixins" as m;
+
+// CTA compatta: testo a sinistra, bottone a destra, centrati sulla riga.
+// Va a capo (bottone sotto) solo se lo spazio è davvero stretto.
+// Box in rilievo: bg chiaro con bordo e ombra sopra il fondo pagina.
+.cta {
+  display: flex;
+  flex-wrap: wrap;
+  max-width: fit-content;
+  margin-inline: auto;
+  align-items: center;
+  justify-content: center;
+  gap: v.$m; // 20px tra testo e bottone
+  text-align: center;
+  padding: v.$xl v.$xxxl;
+  background-color: v.$bg-3;
+  border: 1px solid v.$border-color;
+  border-radius: v.$radius-l;
+  box-shadow: v.$s-shadow;
+
+  @include m.respond-to("mobile") {
+    padding: v.$m;
+  }
+}
+
+.text {
+  font-family: var(--font-body);
+  font-weight: 500;
+  color: v.$title-color;
+  font-size: v.$m;
+}

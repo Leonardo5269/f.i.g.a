@@ -1,0 +1,185 @@
+@use "./variables" as v;
+@use "./mixins" as m;
+
+// Typography
+.font-weight-semibold {
+  font-weight: 600;
+}
+.font-weight-medium {
+  font-weight: 500;
+}
+.font-size-small {
+  font-size: v.$s;
+}
+.primary-text {
+  color: v.$primary;
+}
+.secondary-text {
+  color: v.$secondary;
+}
+.ui-small-color {
+  color: v.$ui-small-color;
+}
+.center-text {
+  text-align: center;
+}
+
+// Registro etichetta (DESIGN.md "Label"): eyebrow, badge, meta prodotto.
+.label {
+  font-family: var(--font-body);
+  font-size: 0.8125rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+// Solo screen reader.
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+// Tema: le sezioni brand (dark) fanno opt-in con questa classe, che
+// ri-scopa le custom property definite su :root in _global.scss.
+// Tipografia globale e bottoni outline/secondary leggono queste var,
+// quindi un solo flip di classe ri-tematizza l'intera sezione.
+.dark {
+  --bg-surface: #{v.$nero-quasi};
+  --ink-title: #{v.$bianco-rotto};
+  --ink-body: #{v.$grigio-chiaro};
+  --ink-muted: #{v.$grigio-riga};
+  --line: #{v.$grigio-riga};
+  --line-strong: #{v.$bianco-rotto};
+  background-color: var(--bg-surface);
+  color: var(--ink-body);
+}
+
+// Divisore tricolore: unico uso continuo consentito del tricolore (DESIGN.md).
+// La larghezza la decide il chiamante (full-width di default).
+.tricolore {
+  height: 4px;
+  background: linear-gradient(
+    to right,
+    v.$verde-bandiera 0 33.33%,
+    v.$bianco-rotto 33.33% 66.66%,
+    v.$rosso-bandiera 66.66% 100%
+  );
+}
+
+// Spacing
+$desktop-vp: 1136px;
+$tablet-mx: 3rem;
+$mobile-mx: v.$m;
+.wrapper {
+  max-width: $desktop-vp;
+  margin-inline: auto;
+  @include m.respond-to(calc($desktop-vp + (2 * $tablet-mx))) {
+    margin-inline: $tablet-mx;
+  }
+  @include m.respond-to("mobile") {
+    margin-inline: $mobile-mx;
+  }
+}
+.s-mtop {
+  padding-top: calc(v.$xxxl * 2);
+}
+.s-py {
+  padding-block: v.$xxxl;
+}
+
+.mt-xxxs {
+  margin-top: 4px;
+}
+.mt-xxs {
+  margin-top: v.$xxs;
+}
+.mt-xs {
+  margin-top: v.$xs;
+}
+.mt-s {
+  margin-top: v.$s;
+}
+.mt-regular {
+  margin-top: v.$regular;
+}
+.mt-m {
+  margin-top: v.$m;
+}
+.mt-l {
+  margin-top: v.$l;
+}
+.mt-xl {
+  margin-top: v.$xl;
+}
+.mt-xxl {
+  margin-top: v.$xxl;
+}
+.mt-xxxl {
+  padding-top: v.$xxxl;
+}
+.mr-regular {
+  margin-right: v.$regular;
+}
+.mr-m {
+  margin-right: v.$m;
+}
+.mb-xxxl {
+  margin-bottom: v.$xxxl;
+}
+
+// UI Components
+.box-1 {
+  border: 1px solid v.$border-color;
+  background-color: v.$bg-1a;
+}
+.custom-bg {
+  position: relative;
+}
+button.btn-1xs,
+a.btn-1xs {
+  @include m.button-props("filled", v.$xs, 0.5rem 0.75rem);
+}
+button.btn-1s,
+a.btn-1s {
+  @include m.button-props("filled", v.$s, 0.75rem 1.5rem);
+}
+button.btn-1,
+a.btn-1 {
+  @include m.button-props("filled", 0.875rem, 0.75rem 1.5rem);
+  min-height: 2.75rem; // touch target ≥ 44px (WCAG 2.2)
+}
+button.btn-1l,
+a.btn-1l {
+  @include m.button-props("filled", 0.9375rem, 1rem 2.25rem);
+  min-height: 3.25rem;
+}
+button.btn-2,
+a.btn-2 {
+  @include m.button-props("outline", 0.8125rem, 0.75rem 1.25rem);
+  min-height: 2.75rem;
+}
+button.btn-2l,
+a.btn-2l {
+  @include m.button-props("outline", 0.9375rem, 1rem 2rem);
+  min-height: 3.25rem;
+}
+button.btn-3,
+a.btn-3 {
+  @include m.button-props("secondary", 0.875rem, 0.75rem 1.5rem);
+  min-height: 2.75rem;
+}
+button.btn-3l,
+a.btn-3l {
+  @include m.button-props("secondary", 0.9375rem, 0.875rem 2rem);
+  min-height: 3.25rem;
+}
+.btn-block {
+  width: 100%;
+}

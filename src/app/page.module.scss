@@ -1,0 +1,13 @@
+@use "@/sass/variables" as v;
+
+// Riga tricolore corta e centrata sotto il titolo di sezione.
+.divisore {
+  width: 8rem;
+  margin: v.$m auto clamp(2rem, 5vw, 3rem);
+}
+
+.griglia {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: clamp(1.5rem, 3vw, 2rem);
+}

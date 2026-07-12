@@ -1,0 +1,18 @@
+@use "@/sass/variables" as v;
+
+// Chiusura manifesto (dark): tutto centrato, il form è l'unico CTA.
+.chiusura {
+  text-align: center;
+}
+
+.titolo {
+  margin-inline: auto;
+  max-width: 30ch;
+}
+
+.sub {
+  margin: v.$m auto 0;
+  max-width: 46ch;
+  font-size: 1rem;
+  text-wrap: pretty;
+}

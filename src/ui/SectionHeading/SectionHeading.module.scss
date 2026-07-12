@@ -1,0 +1,36 @@
+@use "@/sass/variables" as v;
+
+.heading {
+  max-width: 52rem;
+}
+
+.center {
+  margin-inline: auto;
+  text-align: center;
+
+  .lead {
+    margin-inline: auto;
+  }
+}
+
+.lead {
+  max-width: 44rem;
+  text-wrap: pretty;
+}
+
+// Override esplicito per titoli su fondo scuro quando la sezione non usa
+// la classe .dark (che gestisce già i colori via custom property).
+.light {
+  h1,
+  h2,
+  h3,
+  h4 {
+    color: v.$bianco-rotto;
+  }
+  .lead {
+    color: v.$grigio-chiaro;
+  }
+  :global(.eyebrow) {
+    color: v.$bianco-rotto;
+  }
+}

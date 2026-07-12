@@ -1,0 +1,46 @@
+@use "@/sass/variables" as v;
+
+.frame {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+  background: v.$bg-1b;
+}
+
+.r-none {
+  border-radius: 0;
+}
+.r-md {
+  border-radius: v.$radius;
+}
+.r-lg {
+  border-radius: v.$radius-l;
+}
+.r-xl {
+  border-radius: v.$radius-xl;
+}
+
+.img {
+  object-fit: cover;
+}
+
+// Solid grey placeholder shown when no real `src` is provided:
+// every empty frame reads as the same neutral "photo coming" surface.
+.placeholder {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+  background: v.$grigio-chiaro;
+}
+
+.placeholderText {
+  font-family: var(--font-body), sans-serif;
+  font-size: 0.875rem;
+  font-weight: 500;
+  letter-spacing: 0.02em;
+  text-align: center;
+  color: v.$grigio-riga;
+}
