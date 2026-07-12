@@ -1,11 +1,21 @@
 @use "@/sass/variables" as v;
 @use "@/sass/mixins" as m;
 
+// Larghezza massima del contenuto (testo + foto): oltre questa soglia il
+// fondo dark resta full-bleed, ma le due colonne smettono di allargarsi
+// all'infinito (su monitor ultra-wide lasciavano un vuoto crescente
+// accanto al testo, che ha un ingombro comunque limitato).
+$max-w: 1680px;
+
 // Momento brand: manifesto dark a tutta larghezza, due colonne (testo + foto).
-.hero {
+// Il fondo dark (via classe globale .dark) resta full-bleed sulla <section>;
+// .inner centra il contenuto entro un tetto massimo di larghezza.
+.inner {
   display: grid;
   grid-template-columns: 1fr 1fr;
   align-items: stretch;
+  max-width: $max-w;
+  margin-inline: auto;
 
   @include m.respond-to(900px) {
     grid-template-columns: 1fr;
