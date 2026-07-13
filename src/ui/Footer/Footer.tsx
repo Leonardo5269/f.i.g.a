@@ -1,5 +1,6 @@
-import { routes } from "@/features/routes";
+import { routes, cartRoute } from "@/features/routes";
 import { contacts } from "@/features/contacts";
+import { FaShoppingCart } from "react-icons/fa";
 import Logo from "../Logo/Logo";
 import { cn } from "@/utils/ui";
 import styles from "./Footer.module.scss";
@@ -59,6 +60,14 @@ export default function Footer() {
                     </Link>
                   </li>
                 ))}
+                <li key={cartRoute.path}>
+                  <Link
+                    className={cn("simple-link", styles.cartLink)}
+                    href={cartRoute.path}
+                  >
+                    <FaShoppingCart aria-hidden="true" /> {cartRoute.name}
+                  </Link>
+                </li>
               </ul>
             </div>
 

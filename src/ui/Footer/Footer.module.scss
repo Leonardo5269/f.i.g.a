@@ -53,6 +53,18 @@
           color: var(--ink-title);
         }
 
+        // Voce carrello: icona + etichetta sulla stessa riga.
+        .cartLink {
+          display: inline-flex;
+          align-items: center;
+          gap: v.$xxs;
+
+          svg {
+            flex-shrink: 0;
+            font-size: 1em;
+          }
+        }
+
         ul.contacts-list {
           li {
             display: inline-flex;

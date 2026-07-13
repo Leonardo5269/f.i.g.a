@@ -16,7 +16,6 @@ export const routes: RouteType[] = [
   // { path: "/contatti", name: "Contatti" },
 ];
 
-// One-CTA-Rule (DESIGN.md): un solo bottone rosso corsa per superficie —
-// in home lo possiede l'hero. Popolare quando servirà una CTA in navbar:
-// es. { path: "/#la-roba", name: "Compra Ora" }
-export const ctaRoutes: RouteType[] = [];
+// Il carrello ha una UI dedicata (icona in navbar, voce con icona in
+// footer): NON va in `routes`, che alimenta il menu a tendina "Menù".
+export const cartRoute: RouteType = { path: "/carrello", name: "Carrello" };

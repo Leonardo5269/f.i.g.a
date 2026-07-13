@@ -1,0 +1,172 @@
+@use "@/sass/variables" as v;
+@use "@/sass/mixins" as m;
+
+// Riserva d'altezza pre-idratazione: niente flash "vuoto → righe".
+.placeholder {
+  min-height: 12rem;
+}
+
+.empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: v.$xl;
+  padding-block: v.$xxl;
+  text-align: center;
+
+  .emptyText {
+    font-size: 1.0625rem;
+    color: var(--ink-body);
+  }
+}
+
+// Righe a sinistra, riepilogo a destra; stack sotto tablet.
+.layout {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: v.$xxl;
+  align-items: start;
+
+  @include m.respond-to("tablet") {
+    grid-template-columns: 1fr;
+  }
+
+  .lines {
+    list-style: none;
+
+    .line {
+      display: flex;
+      gap: v.$m;
+      padding-block: v.$m;
+      border-bottom: 1px solid v.$grigio-chiaro;
+
+      &:first-child {
+        padding-top: 0;
+      }
+
+      .media {
+        position: relative;
+        flex: none;
+        width: 96px;
+        aspect-ratio: 4 / 5;
+        background-color: v.$grigio-chiaro;
+        border: 1px solid v.$nero-quasi;
+        overflow: hidden;
+
+        img {
+          object-fit: cover;
+        }
+      }
+
+      .details {
+        flex: 1;
+        min-width: 0;
+
+        .name {
+          display: inline-block;
+          font-size: 0.9375rem;
+          font-weight: 700;
+          text-transform: uppercase;
+          line-height: 1.2;
+          color: var(--ink-title);
+
+          &:hover {
+            text-decoration: underline;
+            text-underline-offset: 4px;
+          }
+        }
+
+        .meta {
+          margin-top: 0.25rem;
+          font-size: 0.875rem;
+          color: v.$grigio-riga;
+        }
+
+        .unitPrice {
+          margin-top: 0.375rem;
+          font-size: 0.875rem;
+          font-variant-numeric: tabular-nums;
+        }
+
+        .remove {
+          margin-top: v.$xs;
+          padding: 0;
+          background: none;
+          border: none;
+          font-size: 0.8125rem;
+          font-weight: 700;
+          text-decoration: underline;
+          text-underline-offset: 4px;
+          color: v.$grigio-riga;
+          cursor: pointer;
+          transition: color v.$dur-tocco v.$ease-out-quint;
+
+          &:hover {
+            color: v.$nero-quasi;
+          }
+        }
+      }
+
+      .controls {
+        display: flex;
+        flex-direction: column;
+        align-items: end;
+        gap: v.$xs;
+
+        .lineTotal {
+          font-size: 0.9375rem;
+          font-weight: 700;
+          font-variant-numeric: tabular-nums;
+        }
+      }
+
+      // Su mobile stepper e totale scendono su una riga a tutta larghezza.
+      @include m.respond-to("mobile") {
+        flex-wrap: wrap;
+
+        .details {
+          flex-basis: calc(100% - 96px - v.$m);
+        }
+
+        .controls {
+          flex-direction: row;
+          align-items: center;
+          justify-content: space-between;
+          width: 100%;
+        }
+      }
+    }
+  }
+
+  // Riepilogo: pannello sobrio a bordo netto, l'unico rosso è "Pagamento".
+  .summary {
+    padding: v.$m;
+    border: 1px solid v.$nero-quasi;
+    border-radius: v.$radius;
+
+    .subtotalRow {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      font-size: 1rem;
+      font-weight: 700;
+
+      .subtotal {
+        font-size: 1.25rem;
+        font-variant-numeric: tabular-nums;
+      }
+    }
+
+    .shippingNote {
+      margin-block: v.$xs v.$m;
+      font-size: 0.8125rem;
+      color: v.$grigio-riga;
+    }
+
+    .deferredNote {
+      margin-top: v.$xs;
+      font-size: 0.8125rem;
+      color: v.$grigio-riga;
+    }
+  }
+}
