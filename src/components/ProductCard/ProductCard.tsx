@@ -86,12 +86,10 @@ export default function ProductCard({ product }: ProductCardProps) {
 
           <p className={styles.priceRow}>
             <span className={styles.price}>
-              &euro; {formatEuros(product.priceCents)}
+              &euro;{formatEuros(product.priceCents)}
             </span>
             {onSale && list !== undefined && (
-              <span className={styles.priceOld}>
-                &euro; {formatEuros(list)}
-              </span>
+              <span className={styles.priceOld}>&euro;{formatEuros(list)}</span>
             )}
           </p>
         </div>
