@@ -3,6 +3,7 @@ import type { ReactNode } from "react";
 import { Archivo, Graduate } from "next/font/google";
 import Navbar from "@/ui/Navbar/Navbar";
 import Footer from "@/ui/Footer/Footer";
+import { CartProvider } from "@/features/cart/CartContext";
 import "@/sass/_global.scss";
 
 const archivo = Archivo({
@@ -37,9 +38,12 @@ export default function RootLayout({ children }: RootLayoutProps) {
   return (
     <html lang="it" className={`${archivo.variable} ${graduate.variable}`}>
       <body>
-        <Navbar />
-        {children}
-        <Footer />
+        {/* Provider client, children server-renderizzati (children-as-props). */}
+        <CartProvider>
+          <Navbar />
+          {children}
+          <Footer />
+        </CartProvider>
       </body>
     </html>
   );

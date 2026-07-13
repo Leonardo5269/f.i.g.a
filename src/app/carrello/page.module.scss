@@ -1,0 +1,7 @@
+@use "@/sass/variables" as v;
+
+// Divisore tricolore sotto il titolo, come nella sezione "La Roba".
+.divisore {
+  width: 8rem;
+  margin: v.$m auto clamp(2rem, 5vw, 3rem);
+}

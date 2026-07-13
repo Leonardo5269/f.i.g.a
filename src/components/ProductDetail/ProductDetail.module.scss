@@ -197,6 +197,18 @@
   color: v.$bianco-rotto;
 }
 
+.qty {
+  margin-top: 0.75rem;
+}
+
+// Errore di selezione: urgenza → rosso corsa su light (vedi _variables.scss).
+.error {
+  margin-top: v.$m;
+  font-size: 0.875rem;
+  font-weight: 700;
+  color: v.$rosso-corsa;
+}
+
 .material {
   margin-top: v.$xl;
   font-size: 0.9375rem;

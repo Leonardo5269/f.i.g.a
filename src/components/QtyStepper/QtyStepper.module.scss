@@ -1,0 +1,65 @@
+@use "@/sass/variables" as v;
+
+// Stesso registro dei chip taglia della scheda prodotto: bordo hairline
+// scuro, spigoli 2px, niente ombre.
+.stepper {
+  display: inline-flex;
+  align-items: stretch;
+  border: 1px solid v.$nero-quasi;
+  border-radius: v.$radius;
+
+  button {
+    min-width: 2.75rem;
+    min-height: 2.75rem;
+    padding: 0;
+    background-color: transparent;
+    border: none;
+    font-family: var(--font-body);
+    font-size: 1.125rem;
+    font-weight: 700;
+    line-height: 1;
+    color: var(--ink-title);
+    cursor: pointer;
+    transition: background-color v.$dur-tocco v.$ease-out-quint;
+
+    @media (hover: hover) and (pointer: fine) {
+      &:hover:not(:disabled) {
+        background-color: rgba(v.$nero-quasi, 0.06);
+      }
+    }
+
+    &:disabled {
+      cursor: not-allowed;
+      color: var(--ink-muted);
+    }
+  }
+
+  span {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 2.75rem;
+    font-size: 0.9375rem;
+    font-weight: 700;
+    font-variant-numeric: tabular-nums;
+    border-inline: 1px solid v.$grigio-chiaro;
+  }
+
+  // Variante compatta per le righe del carrello: il target touch resta
+  // ≥44px in larghezza complessiva ma l'altezza scende.
+  &.small {
+    button,
+    span {
+      min-width: 2.25rem;
+      min-height: 2.25rem;
+    }
+
+    button {
+      font-size: 1rem;
+    }
+
+    span {
+      font-size: 0.875rem;
+    }
+  }
+}

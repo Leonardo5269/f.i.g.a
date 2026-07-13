@@ -1,19 +1,11 @@
 @use "@/sass/variables" as v;
 @use "@/sass/mixins" as m;
 
-// L'header sta dentro `.wrapper`, che usa un gutter responsive via
-// margin-inline (3rem sotto i 1232px, 20px sotto i 522px). Il pannello mobile
-// dei link esce dal wrapper (`position: absolute; width: 100%`), quindi per
-// allinearsi al logo riusa gli stessi valori come padding orizzontale.
-
 nav.navbar {
   // Momento brand (DESIGN.md): barra sempre su nero quasi, nessuno stato
-  // trasparente. `--nav-bg` resta il canale condiviso con il pannello mobile.
+  // trasparente. `--nav-bg` resta il canale condiviso col pannello.
   --nav-bg: #{v.$nero-quasi};
 
-  .tablet-vp {
-    display: none;
-  }
   top: 0;
   position: sticky;
   z-index: 10;
@@ -28,115 +20,95 @@ nav.navbar {
     border-bottom-color: v.$grigio-riga;
   }
 
-  :global(.wrapper) {
-    display: flex;
-    justify-content: space-between;
+  // Tre zone: trigger menù | logo centrato | carrello. Le colonne
+  // laterali si equivalgono, così il logo resta al centro ottico.
+  .bar {
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
     align-items: center;
 
-    .nav-container {
-      ul.link-pages {
-        display: flex;
-        align-items: center;
-        gap: 80px;
-        list-style: none;
+    .menuTrigger {
+      justify-self: start;
+      display: inline-flex;
+      align-items: center;
+      gap: v.$xs;
+      min-height: 2.75rem;
+      padding: 0;
+      background: none;
+      border: none;
+      cursor: pointer;
 
-        // Solo i link di navigazione (registro etichetta su fondo scuro);
-        // le CTA (Button) tengono il loro stile.
-        li:not(.cta-mobile) a {
-          color: v.$bianco-rotto;
-          font-size: 0.8125rem;
-          font-weight: 700;
-          letter-spacing: 0.14em;
-          text-transform: uppercase;
-          transition: color v.$dur-tocco v.$ease-out-quint;
+      // Registro etichetta su fondo scuro (come i link del pannello).
+      span {
+        color: v.$bianco-rotto;
+        font-size: 0.8125rem;
+        font-weight: 700;
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+        transition: color v.$dur-tocco v.$ease-out-quint;
+      }
 
-          &:hover {
-            text-decoration: underline;
-            text-underline-offset: 4px;
-          }
-        }
+      &:hover span {
+        color: v.$grigio-chiaro;
+      }
 
-        // Le CTA vivono nel pannello mobile: nascoste su desktop.
-        .cta-mobile {
+      @include m.respond-to("mobile") {
+        // Sotto i 522px resta la sola icona hamburger.
+        span {
           display: none;
         }
       }
     }
 
-    .cta-desktop {
-      display: flex;
+    // Ancora del popover "Aggiunto al carrello" (position: absolute).
+    .cartZone {
+      justify-self: end;
+      position: relative;
+      display: inline-flex;
       align-items: center;
-      gap: v.$xs;
+    }
+  }
+
+  // Pannello a tendina: esce sotto la barra, alto quanto il contenuto
+  // (mai 100vh). Solo fade di stato: niente entrance animation.
+  .panel {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    background: var(--nav-bg);
+    border-bottom: 1px solid v.$grigio-riga;
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    transition:
+      opacity v.$dur-stato v.$ease-out-quint,
+      visibility v.$dur-stato v.$ease-out-quint;
+
+    &.open {
+      opacity: 1;
+      visibility: visible;
+      pointer-events: all;
     }
 
-    @include m.respond-to("tablet") {
-      .cta-desktop {
-        display: none;
-      }
-      .tablet-vp {
-        display: block;
-      }
+    .panelList {
+      display: flex;
+      flex-direction: column;
+      align-items: start;
+      gap: v.$m;
+      padding-block: v.$xl;
 
-      .nav-container {
-        width: auto;
+      li a {
+        color: v.$bianco-rotto;
+        font-size: 0.8125rem;
+        font-weight: 700;
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+        transition: color v.$dur-tocco v.$ease-out-quint;
 
-        ul.link-pages {
-          margin-top: 25px; // Nav height
-          position: absolute;
-          left: 0;
-          flex-direction: column;
-          justify-content: start;
-          align-items: start;
-          background: var(--nav-bg);
-          width: 100%;
-          // Padding orizzontale = gutter del wrapper. `.wrapper` usa
-          // margin-inline 3rem (<1232px) e 20px (<522px): riusiamo gli stessi
-          // valori così i link del pannello restano allineati al logo.
-          padding-block: v.$xxl calc(2 * v.$m);
-          padding-inline: 3rem;
-          overflow: hidden;
-
-          // Il pannello copre lo schermo e scivola da sinistra con fade-in.
-          // Altezza e gap sono costanti: animiamo solo transform + opacity,
-          // così scivola da sinistra verso destra invece di "crescere".
-          height: 90dvh;
-          gap: v.$xxl;
-          transform: translateX(-100%);
-          opacity: 0;
-          visibility: hidden;
-          pointer-events: none;
-          transition:
-            transform 0.4s ease-out,
-            opacity 0.35s ease-out,
-            visibility 0.4s ease;
-
-          @include m.respond-to("mobile") {
-            padding-inline: v.$m;
-          }
-
-          // Nel pannello mobile le CTA tornano visibili: i due Button vivono
-          // nello stesso <li>, affiancati con 12px di gap (come su desktop).
-          .cta-mobile {
-            display: flex;
-            align-items: center;
-            gap: v.$xs;
-          }
-
-          // Aperto: scivola in posizione (sinistra → destra) e appare.
-          &.show {
-            transform: translateX(0);
-            opacity: 1;
-            visibility: visible;
-            pointer-events: all;
-          }
-
-          // Chiuso: esce di nuovo verso sinistra e svanisce.
-          &.hide {
-            transform: translateX(-100%);
-            opacity: 0;
-            visibility: hidden;
-            pointer-events: none;
-          }
+        &:hover {
+          text-decoration: underline;
+          text-underline-offset: 4px;
         }
       }
     }
