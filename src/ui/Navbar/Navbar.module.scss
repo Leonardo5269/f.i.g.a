@@ -28,6 +28,8 @@ nav.navbar {
     align-items: center;
 
     .menuTrigger {
+      min-width: 44px;
+      justify-content: center;
       justify-self: start;
       display: inline-flex;
       align-items: center;
@@ -38,8 +40,10 @@ nav.navbar {
       border: none;
       cursor: pointer;
 
-      // Registro etichetta su fondo scuro (come i link del pannello).
-      span {
+      // Etichetta "Menù" (registro label su fondo scuro). SOLO il figlio
+      // diretto: le barre dell'hamburger sono <span> annidati in
+      // .hamburger-icon e non vanno toccate da queste regole.
+      > span {
         color: v.$bianco-rotto;
         font-size: 0.8125rem;
         font-weight: 700;
@@ -48,13 +52,13 @@ nav.navbar {
         transition: color v.$dur-tocco v.$ease-out-quint;
       }
 
-      &:hover span {
+      &:hover > span {
         color: v.$grigio-chiaro;
       }
 
       @include m.respond-to("mobile") {
-        // Sotto i 522px resta la sola icona hamburger.
-        span {
+        // Sotto i 522px si nasconde solo il testo: resta l'hamburger.
+        > span {
           display: none;
         }
       }
