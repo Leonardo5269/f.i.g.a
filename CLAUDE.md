@@ -60,6 +60,35 @@ Two systems are used together:
 
 `cn(...)` (from `@/utils/ui`) is the standard combiner for merging module + global + conditional classes.
 
+**Nest selectors by DOM hierarchy.** Inside a `.module.scss`, a child element's class nests inside its parent's block, mirroring the component's markup — don't declare every element as a flat top-level selector. Use `&` for pseudo-classes/states (`&:hover`, `&:disabled`, `&.loading`) and nest media queries (incl. `@include m.respond-to(...)`) inside the selector they apply to, not as a separate block at the end of the file. Example, based on `ProductCard.module.scss`:
+
+```scss
+// Avoid (flat)
+.card { ... }
+.link { ... }
+.media { ... }
+.foto { ... }
+
+// Prefer (nested by DOM hierarchy)
+.card {
+  ...
+
+  .link {
+    ...
+
+    .media {
+      ...
+
+      .foto {
+        ...
+      }
+    }
+  }
+}
+```
+
+This applies to new and edited files; existing flat `.module.scss` files don't need an immediate rewrite, but align them when you're already touching them.
+
 Inside a `.module.scss`, pull in design tokens and mixins:
 
 ```scss

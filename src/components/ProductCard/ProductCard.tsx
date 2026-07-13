@@ -4,7 +4,7 @@ import { useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import type { Product } from "@/lib/products";
-import { formatEuros } from "@/lib/products";
+import { formatEuros, GARMENT_LABEL } from "@/lib/products";
 import { cn } from "@/utils/ui";
 import styles from "./ProductCard.module.scss";
 
@@ -77,15 +77,20 @@ export default function ProductCard({ product }: ProductCardProps) {
             </span>
           )}
 
-          <h3 className={styles.name}>{product.name}</h3>
+          <div>
+            <h3 className={styles.name}>{product.name}</h3>
+            <p className={styles.type} style={{ marginTop: "4px" }}>
+              {GARMENT_LABEL[product.type]}
+            </p>
+          </div>
 
           <p className={styles.priceRow}>
             <span className={styles.price}>
-              &euro;{formatEuros(product.priceCents)}
+              &euro; {formatEuros(product.priceCents)}
             </span>
             {onSale && list !== undefined && (
               <span className={styles.priceOld}>
-                &euro;{formatEuros(list)}
+                &euro; {formatEuros(list)}
               </span>
             )}
           </p>
