@@ -3,6 +3,7 @@
 import { formatEuros } from "@/lib/products";
 import { useCart } from "@/features/cart/CartContext";
 import { lineKey } from "@/features/cart/cart";
+import { useCheckout } from "@/features/cart/useCheckout";
 import Button from "@/ui/Button/Button";
 import CartLineItem from "./CartLineItem";
 import styles from "./CartView.module.scss";
@@ -15,6 +16,7 @@ import styles from "./CartView.module.scss";
  */
 export default function CartView() {
   const { items, hydrated, subtotal } = useCart();
+  const { start, pending, error } = useCheckout();
 
   // Lo storage si legge solo sul client: prima dell'idratazione non
   // mostriamo nulla (né righe né "carrello vuoto") per evitare flash.
@@ -49,11 +51,20 @@ export default function CartView() {
         <p className={styles.shippingNote}>
           Spedizione e totale calcolati al pagamento.
         </p>
-        {/* TODO: flusso Stripe multi-item — deferito, per ora inattivo. */}
-        <Button variant="filled" size="lg" block disabled>
+        <Button
+          variant="filled"
+          size="lg"
+          block
+          loading={pending}
+          onClick={() => start(items)}
+        >
           Pagamento
         </Button>
-        <p className={styles.deferredNote}>Pagamento in arrivo.</p>
+        {error && (
+          <p className={styles.error} role="alert">
+            {error}
+          </p>
+        )}
       </aside>
     </div>
   );

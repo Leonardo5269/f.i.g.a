@@ -21,10 +21,10 @@ No lint script and no test framework are configured.
 
 ## Commerce
 
-- **`src/lib/products.ts`** — the catalog and the single source of truth for prices (integer cents). Read **server-side only** by the checkout API; the client never sends a price.
-- **`src/app/api/checkout/route.ts`** — POST `{ productId }` → creates a Stripe Checkout Session (single item, qty 1) and returns its URL. Requires `STRIPE_SECRET_KEY` and `NEXT_PUBLIC_BASE_URL`.
-- **`src/app/api/webhook/route.ts`** — Stripe webhook (`STRIPE_WEBHOOK_SECRET`); fulfillment hooks in here on `checkout.session.completed`, receiving the purchased `productId` via session metadata. Currently a logged placeholder (no DB yet).
-- `src/app/success/page.tsx` + `src/app/cancel/page.tsx` — checkout outcome pages.
+- **`src/lib/products.ts`** — the catalog and the single source of truth for prices (integer cents). Read **server-side only** by the checkout API; the client never sends a price. Each product also carries its Stripe product/price IDs (`stripeProductId`/`stripePriceId`, created in the sandbox for the receipt/dashboard), but the **charged amount always comes from `priceCents`**, never from Stripe.
+- **`src/app/api/checkout/route.ts`** — POST `{ items: [{ productId, size, color, qty }] }` (also accepts legacy `{ productId }`) → validates every line against the catalog server-side (`validateCartItems`, dropping unknown/coming-soon lines), groups by product, and creates a multi-item Stripe Checkout Session; the per-variant cart is serialized into session `metadata` (chunked over `cart_*` keys when long) for fulfillment. Returns the session URL. Requires `STRIPE_SECRET_KEY` and `NEXT_PUBLIC_BASE_URL`. Client trigger: the shared `useCheckout()` hook (`src/features/cart/useCheckout.ts`), used by the cart, the added-to-cart modal, and "Compra ora".
+- **`src/app/api/webhook/route.ts`** — Stripe webhook (`STRIPE_WEBHOOK_SECRET`); fulfillment hooks in here on `checkout.session.completed`, reconstructing the purchased cart lines (with variants) from session metadata via `readCartFromMetadata`. Currently a logged placeholder (no DB yet).
+- `src/app/success/page.tsx` + `src/app/cancel/page.tsx` — checkout outcome pages. `/success` mounts `<CartReset>` to empty the cart once a real `session_id` returns.
 
 ## Design Context
 

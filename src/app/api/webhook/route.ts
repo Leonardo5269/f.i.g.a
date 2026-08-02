@@ -17,6 +17,54 @@ function getStripe(): Stripe {
   return stripeClient;
 }
 
+interface FulfillmentLine {
+  productId: string;
+  size: string | null;
+  color: string | null;
+  qty: number;
+}
+
+/**
+ * Ricompone il carrello serializzato nei metadata della sessione (vedi la
+ * route checkout): una sola chiave `cart`, oppure più chunk `cart_0`,
+ * `cart_1`, … concatenati in ordine. Qualsiasi payload malformato → [].
+ */
+function readCartFromMetadata(
+  metadata: Stripe.Metadata | null,
+): FulfillmentLine[] {
+  if (!metadata) return [];
+
+  const raw =
+    metadata.cart ??
+    Object.keys(metadata)
+      .filter((key) => /^cart_\d+$/.test(key))
+      .sort((a, b) => Number(a.slice(5)) - Number(b.slice(5)))
+      .map((key) => metadata[key])
+      .join("");
+
+  if (!raw) return [];
+
+  try {
+    const parsed = JSON.parse(raw) as unknown;
+    if (!Array.isArray(parsed)) return [];
+    return parsed.flatMap((entry): FulfillmentLine[] => {
+      if (typeof entry !== "object" || entry === null) return [];
+      const { p, s, c, q } = entry as Record<string, unknown>;
+      if (typeof p !== "string" || typeof q !== "number") return [];
+      return [
+        {
+          productId: p,
+          size: typeof s === "string" ? s : null,
+          color: typeof c === "string" ? c : null,
+          qty: q,
+        },
+      ];
+    });
+  } catch {
+    return [];
+  }
+}
+
 export async function POST(request: Request): Promise<Response> {
   const webhookSecret = process.env.STRIPE_WEBHOOK_SECRET;
   if (!webhookSecret) {
@@ -70,15 +118,14 @@ export async function POST(request: Request): Promise<Response> {
       // ========================================================
       // FULFILLMENT DELL'ORDINE — punto di aggancio del database.
       //
-      // Qui va inserita la query di persistenza dell'ordine, ad es.:
+      // Il carrello (righe con varianti) viaggia nei metadata della
+      // sessione; qui lo si ricompone per sapere cosa evadere.
       //
       //   INSERT INTO orders (
       //     stripe_session_id,     -- session.id (chiave di idempotenza:
       //                            --   vincolo UNIQUE, così le ritrasmissioni
       //                            --   dello stesso evento non duplicano ordini)
       //     stripe_payment_intent, -- session.payment_intent
-      //     product_id,            -- session.metadata?.productId (quale
-      //                            --   articolo del catalogo evadere)
       //     customer_email,        -- session.customer_details?.email
       //     shipping_address,      -- session.collected_information?.shipping_details
       //     amount_total_cents,    -- session.amount_total (centesimi, intero)
@@ -87,17 +134,30 @@ export async function POST(request: Request): Promise<Response> {
       //     created_at             -- new Date(event.created * 1000)
       //   )
       //   ON CONFLICT (stripe_session_id) DO NOTHING;
+      //   -- + una riga per ogni articolo di `lines` (product_id, taglia,
+      //   --   colore, quantità) in una tabella order_items.
       //
       // Seguono tipicamente: invio email di conferma / passaggio in
-      // produzione dell'articolo (stampa/confezione) in base a
-      // product_id. Ogni step deve essere idempotente perché Stripe
-      // ritrasmette gli eventi finché non riceve un 200.
+      // produzione degli articoli (stampa/confezione). Ogni step deve
+      // essere idempotente perché Stripe ritrasmette gli eventi finché
+      // non riceve un 200.
       // ========================================================
+      const lines = readCartFromMetadata(session.metadata);
+      const summary =
+        lines
+          .map(
+            (line) =>
+              `${line.qty}× ${line.productId}` +
+              (line.size ? `/${line.size}` : "") +
+              (line.color ? `/${line.color}` : ""),
+          )
+          .join(", ") || "n/d";
+
       console.log(
         `[api/webhook] Pagamento confermato — sessione: ${session.id}, ` +
-          `prodotto: ${session.metadata?.productId ?? "n/d"}, ` +
+          `articoli: [${summary}], ` +
           `email: ${session.customer_details?.email ?? "n/d"}, ` +
-          `importo: ${session.amount_total ?? 0} ${session.currency ?? "n/d"}`
+          `importo: ${session.amount_total ?? 0} ${session.currency ?? "n/d"}`,
       );
 
       break;

@@ -236,7 +236,8 @@
   max-width: 24rem;
   margin-top: v.$xxl;
 
-  // I bottoni sono placeholder disabilitati: non "in progress" ma inattivi.
+  // Durante il redirect a Stripe il bottone è in loading (disabilitato):
+  // cursore coerente con lo stato non interagibile.
   button:disabled {
     cursor: not-allowed;
   }

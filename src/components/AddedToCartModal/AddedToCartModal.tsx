@@ -6,6 +6,7 @@ import { FaCheckCircle, FaTimes } from "react-icons/fa";
 import { getProductById, formatEuros } from "@/lib/products";
 import { useCart } from "@/features/cart/CartContext";
 import { lineKey, type CartItem } from "@/features/cart/cart";
+import { useCheckout } from "@/features/cart/useCheckout";
 import { cartRoute } from "@/features/routes";
 import Button from "@/ui/Button/Button";
 import styles from "./AddedToCartModal.module.scss";
@@ -24,7 +25,8 @@ export default function AddedToCartModal({
   item,
   onClose,
 }: AddedToCartModalProps) {
-  const { count } = useCart();
+  const { count, items } = useCart();
+  const { start, pending, error } = useCheckout();
   const closeRef = useRef<HTMLButtonElement>(null);
   const dialogRef = useRef<HTMLDivElement>(null);
 
@@ -116,10 +118,19 @@ export default function AddedToCartModal({
           <Button variant="outline" block href={cartRoute.path} onClick={onClose}>
             Visualizza carrello ({count})
           </Button>
-          {/* TODO: flusso Stripe multi-item — deferito, per ora inattivo. */}
-          <Button variant="filled" block disabled>
+          <Button
+            variant="filled"
+            block
+            loading={pending}
+            onClick={() => start(items)}
+          >
             Pagamento
           </Button>
+          {error && (
+            <p className={styles.error} role="alert">
+              {error}
+            </p>
+          )}
         </div>
       </div>
     </>

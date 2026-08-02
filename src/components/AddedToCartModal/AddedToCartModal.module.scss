@@ -110,6 +110,13 @@
     display: grid;
     gap: v.$xs;
     margin-top: v.$m;
+
+    // Errore di pagamento: urgenza → rosso corsa (come ProductDetail).
+    .error {
+      font-size: 0.8125rem;
+      font-weight: 700;
+      color: v.$rosso-corsa;
+    }
   }
 
   @include m.respond-to("mobile") {

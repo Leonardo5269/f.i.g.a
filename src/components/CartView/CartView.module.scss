@@ -163,10 +163,12 @@
       color: v.$grigio-riga;
     }
 
-    .deferredNote {
-      margin-top: v.$xs;
-      font-size: 0.8125rem;
-      color: v.$grigio-riga;
+    // Errore di pagamento: urgenza → rosso corsa su light (come ProductDetail).
+    .error {
+      margin-top: v.$s;
+      font-size: 0.875rem;
+      font-weight: 700;
+      color: v.$rosso-corsa;
     }
   }
 }

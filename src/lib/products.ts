@@ -52,6 +52,14 @@ export interface Badge {
 export interface Product {
   id: string;
   type: GarmentType;
+  /**
+   * Prodotto Stripe corrispondente, creato nel sandbox. Il checkout lo
+   * referenzia per la ricevuta, ma l'importo addebitato resta `priceCents`:
+   * il catalogo è l'unica fonte di verità del prezzo (vedi route checkout).
+   */
+  stripeProductId?: string;
+  /** Prezzo di default in dashboard Stripe, allineato a `priceCents`. */
+  stripePriceId?: string;
   /** Nome goliardico (registro Archivo, non un titolo manifesto). */
   name: string;
   /** Mini descrizione: vende la voglia, non la scheda tecnica. */
@@ -66,6 +74,11 @@ export interface Product {
   /** Varianti colore (assenti sugli sticker). */
   colors?: ColorOption[];
   badge?: Badge;
+  /**
+   * Non ancora in vendita: la card resta in griglia con overlay "Coming Soon",
+   * non è cliccabile e la scheda dedicata non è acquistabile.
+   */
+  comingSoon?: boolean;
   /** Immagine principale / fallback (quando non c'è variante colore). */
   image: string;
 }
@@ -84,6 +97,8 @@ export const PRODUCTS: Product[] = [
   {
     id: "t-shirt",
     type: "t-shirt",
+    stripeProductId: "prod_V07unEPddAEjD8",
+    stripePriceId: "price_1U07euFmGQQbv896jjntM6D0",
     name: "Patriota della Domenica",
     description:
       "Cotone pesante e taglio dritto: l'orgoglio nazionale che indossi senza pensarci, dal divano allo stadio.",
@@ -101,6 +116,8 @@ export const PRODUCTS: Product[] = [
   {
     id: "felpa-girocollo",
     type: "felpa-girocollo",
+    stripeProductId: "prod_V07uL8G8R2Yc6r",
+    stripePriceId: "price_1U07f3FmGQQbv8961V0LUNyC",
     name: "Il Commissario Tecnico",
     description:
       "La felpa di chi la formazione la sa meglio del ct. Girocollo garzato, caldo da tripletta.",
@@ -108,6 +125,7 @@ export const PRODUCTS: Product[] = [
     originalPriceCents: 7000,
     material: "80% cotone, 20% poliestere — felpa garzata interno",
     sizes: ["S", "M", "L", "XL", "XXL"],
+    comingSoon: true,
     colors: [
       { name: "Bordeaux", swatch: BORDEAUX, image: "/felpa/felpa-1.png" },
       { name: "Nero", swatch: NERO, image: "/felpa/felpa-1.png" },
@@ -118,6 +136,8 @@ export const PRODUCTS: Product[] = [
   {
     id: "felpa-cappuccio",
     type: "felpa-cappuccio",
+    stripeProductId: "prod_V07u9bbEfVtoyQ",
+    stripePriceId: "price_1U07f6FmGQQbv896sVTkbyr5",
     name: "Ultrà da Divano",
     description:
       "Cappuccio profondo, felpa pesante: per tifare a squarciagola anche a partita finita.",
@@ -125,6 +145,7 @@ export const PRODUCTS: Product[] = [
     material: "80% cotone, 20% poliestere — 300 g/m²",
     sizes: ["S", "M", "L", "XL", "XXL"],
     badge: { label: "Ultimo Arrivo", tone: "neutro" },
+    comingSoon: true,
     colors: [
       { name: "Nero", swatch: NERO, image: "/felpa/felpa-nera.jpg" },
       { name: "Antracite", swatch: ANTRACITE, image: "/felpa/felpa-nera.jpg" },
@@ -135,12 +156,15 @@ export const PRODUCTS: Product[] = [
   {
     id: "sciarpa",
     type: "sciarpa",
+    stripeProductId: "prod_V07uHrjDswrbYS",
+    stripePriceId: "price_1U07f9FmGQQbv896fc9EXfFD",
     name: "Inno a Squarciagola",
     description:
       "Lana jacquard tricolore da sventolare. Un drop soltanto, poi sparisce come un rigore sbagliato.",
     priceCents: 2500,
     material: "100% acrilico, tessitura jacquard tricolore",
     badge: { label: "Drop Limitato", tone: "rilievo" },
+    comingSoon: true,
     colors: [
       { name: "Tricolore", swatch: TRICOLORE, image: "/sciarpa/sciarpa-1.png" },
     ],
@@ -149,6 +173,8 @@ export const PRODUCTS: Product[] = [
   {
     id: "cappello",
     type: "cappello",
+    stripeProductId: "prod_V07vpz0K2lZsnO",
+    stripePriceId: "price_1U07fBFmGQQbv89693qRqNd3",
     name: "Cappellino da Balcone",
     description:
       "Visiera strutturata e ricamo tricolore. Per cantare l'inno dal balcone con un minimo di stile.",
@@ -163,12 +189,15 @@ export const PRODUCTS: Product[] = [
   {
     id: "guanti",
     type: "guanti",
+    stripeProductId: "prod_V07vWAGW04FizZ",
+    stripePriceId: "price_1U07fEFmGQQbv896GiaOKlvQ",
     name: "Il Capitano",
     description:
       "Vera pelle e fodera morbida: la stretta di mano del capitano che non hai mai avuto.",
     priceCents: 4000,
     material: "Vera pelle, fodera interna in cashmere",
     sizes: ["S", "M", "L"],
+    comingSoon: true,
     colors: [
       { name: "Nero", swatch: NERO, image: "/guanti/guanti-1.png" },
       { name: "Marrone", swatch: MARRONE, image: "/guanti/guanti-1.png" },
@@ -178,6 +207,8 @@ export const PRODUCTS: Product[] = [
   {
     id: "sticker",
     type: "sticker",
+    stripeProductId: "prod_V07vE3clkBO8AR",
+    stripePriceId: "price_1U07fGFmGQQbv896JjGzkwkh",
     name: "Kit Attacca-Brighe",
     description:
       "Vinile impermeabile, colori che non mollano. Attaccali ovunque e semina un po' di sano orgoglio.",

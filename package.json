@@ -1,8 +1,8 @@
 {
-  "name": "figa-store",
+  "name": "f.i.g.a",
   "version": "1.0.0",
   "private": true,
-  "description": "E-commerce MVP B2C monoprodotto: Next.js App Router + Stripe Checkout, deploy-ready su Vercel.",
+  "description": "F.I.G.A. — Facciamo Italia Grande Ancora: e-commerce MVP di merch patriottico ironico. Next.js App Router + Stripe Checkout (carrello multi-prodotto), deploy-ready su Vercel.",
   "scripts": {
     "dev": "next dev",
     "build": "next build",
@@ -13,7 +13,7 @@
     "node": ">=20.0.0"
   },
   "dependencies": {
-    "next": "^16.2.10",
+    "next": "^16.2.12",
     "react": "^19.2.7",
     "react-dom": "^19.2.7",
     "react-icons": "^5.7.0",

@@ -1,4 +1,5 @@
 import Esito from "@/ui/Esito/Esito";
+import CartReset from "@/components/CartReset/CartReset";
 
 interface SuccessPageProps {
   // In Next.js 15+ searchParams è una Promise (rendering dinamico).
@@ -12,6 +13,8 @@ export default async function SuccessPage({ searchParams }: SuccessPageProps) {
 
   return (
     <main>
+      {/* Pagamento confermato: si svuota il carrello (solo con session_id). */}
+      <CartReset active={sessionId !== null} />
       <Esito
         stamp="Pratica approvata"
         title="Pagamento riuscito."

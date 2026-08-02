@@ -11,9 +11,12 @@ interface PageProps {
   params: Promise<{ id: string }>;
 }
 
-// Pre-render statico di ogni scheda prodotto: zero costo in idle.
+// Pre-render statico di ogni scheda prodotto in vendita: zero costo in idle.
+// I "coming soon" non hanno scheda dedicata finché non sono acquistabili.
 export function generateStaticParams(): Array<{ id: string }> {
-  return PRODUCTS.map((product) => ({ id: product.id }));
+  return PRODUCTS.filter((product) => !product.comingSoon).map((product) => ({
+    id: product.id,
+  }));
 }
 
 export async function generateMetadata({
@@ -33,7 +36,8 @@ export async function generateMetadata({
 export default async function ProductPage({ params }: PageProps) {
   const { id } = await params;
   const product = getProductById(id);
-  if (!product) notFound();
+  // "Coming soon" = non ancora in vendita: nessuna scheda acquistabile.
+  if (!product || product.comingSoon) notFound();
 
   return (
     <main>

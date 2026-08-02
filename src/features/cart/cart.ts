@@ -82,22 +82,15 @@ export function subtotalCents(items: CartItem[]): number {
 }
 
 /**
- * Idratazione da localStorage: qualsiasi dato corrotto, di versione
- * diversa o non più valido rispetto al catalogo viene scartato in
- * silenzio — mai un crash per uno storage sporco.
+ * Valida una lista grezza di righe contro il catalogo: scarta in silenzio
+ * tutto ciò che non torna (id sconosciuto, taglia/colore non validi, qty
+ * non numerica) e fonde le quantità dei duplicati. Usata sia dall'idratazione
+ * localStorage sia dal checkout server-side (il client non è mai attendibile:
+ * né lo storage né il body della richiesta).
  */
-export function sanitizeStoredCart(raw: unknown): CartItem[] {
-  if (
-    typeof raw !== "object" ||
-    raw === null ||
-    (raw as { version?: unknown }).version !== CART_SCHEMA_VERSION ||
-    !Array.isArray((raw as { items?: unknown }).items)
-  ) {
-    return [];
-  }
-
+export function validateCartItems(rawItems: unknown[]): CartItem[] {
   const clean: CartItem[] = [];
-  for (const entry of (raw as { items: unknown[] }).items) {
+  for (const entry of rawItems) {
     if (typeof entry !== "object" || entry === null) continue;
     const { productId, size, color, qty } = entry as Record<string, unknown>;
 
@@ -131,6 +124,24 @@ export function sanitizeStoredCart(raw: unknown): CartItem[] {
 
   // Dedup per lineKey (merge delle quantità).
   return clean.reduce<CartItem[]>((deduped, item) => addLine(deduped, item), []);
+}
+
+/**
+ * Idratazione da localStorage: qualsiasi dato corrotto, di versione
+ * diversa o non più valido rispetto al catalogo viene scartato in
+ * silenzio — mai un crash per uno storage sporco.
+ */
+export function sanitizeStoredCart(raw: unknown): CartItem[] {
+  if (
+    typeof raw !== "object" ||
+    raw === null ||
+    (raw as { version?: unknown }).version !== CART_SCHEMA_VERSION ||
+    !Array.isArray((raw as { items?: unknown }).items)
+  ) {
+    return [];
+  }
+
+  return validateCartItems((raw as { items: unknown[] }).items);
 }
 
 /** Shape serializzata su localStorage. */

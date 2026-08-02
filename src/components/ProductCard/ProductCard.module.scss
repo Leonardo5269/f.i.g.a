@@ -26,6 +26,26 @@
         object-fit: cover;
         transition: transform v.$dur-stato v.$ease-out-quint;
       }
+
+      // Timbro "Coming Soon" (solo prodotti non ancora in vendita): barra scura
+      // centrata, registro etichetta. Non è rosso corsa: è uno stato, non una CTA.
+      .soonTag {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        z-index: 1;
+        padding: 0.5rem 1rem;
+        background-color: v.$nero-quasi;
+        color: v.$bianco-rotto;
+        font-family: var(--font-body);
+        font-size: 0.8125rem;
+        font-weight: 700;
+        letter-spacing: 0.16em;
+        text-transform: uppercase;
+        line-height: 1;
+        white-space: nowrap;
+      }
     }
 
     // Zoom leggero solo dove l'hover esiste davvero (e non in reduced-motion).
@@ -33,6 +53,19 @@
       &:hover .foto {
         transform: scale(1.035);
       }
+    }
+  }
+
+  // Prodotto non ancora in vendita: card inerte (niente hover/click) e foto
+  // attenuata, così l'overlay "Coming Soon" resta leggibile e la scheda quieta.
+  &.isSoon {
+    .link {
+      pointer-events: none;
+    }
+
+    .media .foto {
+      filter: grayscale(1);
+      opacity: 0.5;
     }
   }
 
