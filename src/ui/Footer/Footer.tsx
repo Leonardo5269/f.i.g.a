@@ -92,19 +92,19 @@ export default function Footer() {
 
         <div className={`mt-xl ${styles.line}`}>
           <nav className={styles.legal} aria-label="Link legali">
-            {/* TODO: collegare le pagine legali reali quando esisteranno. */}
-            <a href="#" className="simple-link">
+            {/* TODO: collegare la pagina Spedizioni quando esisterà. */}
+            <Link href="/privacy" className="simple-link">
               Privacy
-            </a>
+            </Link>
+            <Link href="/terms" className="simple-link">
+              Termini
+            </Link>
             <a href="#" className="simple-link">
-              Terms
+              Spedizioni
             </a>
-            <a href="#" className="simple-link">
-              Shipping
-            </a>
-            <a href="#" className="simple-link">
-              Contact
-            </a>
+            <Link href="/contatti" className="simple-link">
+              Contatti
+            </Link>
           </nav>
           <span className="font-size-small">
             © 2026 {contacts.company}. All rights reserved.

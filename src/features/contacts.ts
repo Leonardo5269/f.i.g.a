@@ -1,8 +1,8 @@
-import { FaEnvelope } from "react-icons/fa";
-// import { FaPhoneAlt, FaMapMarkerAlt } from "react-icons/fa";
+import { FaEnvelope, FaPhoneAlt } from "react-icons/fa";
+// import { FaMapMarkerAlt } from "react-icons/fa";
 
-// Dati di contatto f.i.g.a — placeholder finché non esistono dati reali.
-// Consumati dal Footer (colonna contatti attualmente commentata; il
+// Dati di contatto f.i.g.a — fonte unica di verità, consumati dalla pagina
+// Contatti e dal Footer (colonna contatti attualmente commentata; il
 // copyright usa solo `company`).
 export const contacts = {
   company: "F.I.G.A. Italia",
@@ -10,11 +10,14 @@ export const contacts = {
   // iva: "00000000000",
   email: {
     Icon: FaEnvelope,
-    // TODO: email reale
-    content: "info@example.com",
+    content: "leo@studiocolore.it",
   },
-  // TODO: telefono e indirizzo reali
-  // phone: { Icon: FaPhoneAlt, content: "000 000 0000" },
+  phone: {
+    Icon: FaPhoneAlt,
+    content: "327 951 4494",
+    href: "tel:+393279514494",
+  },
+  // TODO: indirizzo reale
   // address: {
   //   Icon: FaMapMarkerAlt,
   //   content: "Via …, Città",

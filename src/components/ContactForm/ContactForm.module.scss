@@ -51,6 +51,15 @@
   min-width: 10rem;
 }
 
+// Messaggio d'errore su sezione dark: testo errore dedicato (mai il rosso
+// corsa del CTA), voce leggera del brand. I valori restano nel form.
+.errore {
+  color: v.$errore;
+  font-size: 0.9375rem;
+  font-weight: 600;
+  line-height: 1.4;
+}
+
 .conferma {
   max-width: 34rem;
   margin: v.$xxl auto 0;

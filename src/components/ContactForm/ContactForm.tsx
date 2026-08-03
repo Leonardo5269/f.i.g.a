@@ -5,25 +5,49 @@ import Button from "@/ui/Button/Button";
 import { cn } from "@/utils/ui";
 import styles from "./ContactForm.module.scss";
 
-// Seam per l'invio reale: oggi il form è un mock (nessun backend). Quando
-// esisterà un endpoint, sostituire il corpo con una fetch a /api/contact —
-// il componente non cambia.
+// Seam per l'invio: POST a /api/contact. La firma resta invariata così il
+// resto del componente non cambia se un domani si sostituisce il trasporto.
 async function submitContact(
-  _data: FormData,
+  data: FormData,
 ): Promise<{ ok: boolean; error?: string }> {
-  // TODO(api/contact): POST verso l'endpoint quando esisterà.
-  return { ok: true };
+  const payload = {
+    nome: String(data.get("nome") ?? ""),
+    email: String(data.get("email") ?? ""),
+    messaggio: String(data.get("messaggio") ?? ""),
+  };
+
+  try {
+    const res = await fetch("/api/contact", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(payload),
+    });
+    if (!res.ok) return { ok: false };
+    return { ok: true };
+  } catch {
+    return { ok: false };
+  }
 }
 
 export default function ContactForm() {
   const [sent, setSent] = useState(false);
+  const [sending, setSending] = useState(false);
+  const [failed, setFailed] = useState(false);
 
   async function handleSubmit(
     event: FormEvent<HTMLFormElement>,
   ): Promise<void> {
     event.preventDefault();
+    if (sending) return;
+
+    setSending(true);
+    setFailed(false);
+    // I valori restano nel form: su errore li teniamo per il retry.
     const result = await submitContact(new FormData(event.currentTarget));
+    setSending(false);
+
     if (result.ok) setSent(true);
+    else setFailed(true);
   }
 
   if (sent) {
@@ -46,6 +70,7 @@ export default function ContactForm() {
           type="text"
           placeholder="NOME"
           required
+          maxLength={100}
           className={styles.campo}
         />
 
@@ -70,17 +95,26 @@ export default function ContactForm() {
         name="messaggio"
         placeholder="MESSAGGIO"
         required
+        maxLength={5000}
         rows={5}
         className={cn(styles.campo, styles.textarea)}
       />
+
+      {failed && (
+        <p className={styles.errore} role="alert">
+          Qualcosa è andato storto e il messaggio non è partito. Riprova tra un
+          attimo — il testo è ancora tutto lì.
+        </p>
+      )}
 
       <Button
         type="submit"
         variant="filled"
         size="lg"
+        loading={sending}
         className={styles.invia}
       >
-        Manda
+        {sending ? "Invio…" : "Manda"}
       </Button>
     </form>
   );

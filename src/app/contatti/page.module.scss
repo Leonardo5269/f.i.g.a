@@ -1,0 +1,52 @@
+@use "@/sass/variables" as v;
+@use "@/sass/mixins" as m;
+
+// Divisore tricolore sotto il titolo, come nella sezione "La Roba", nel
+// carrello e nella privacy.
+.divisore {
+  width: 8rem;
+  margin: v.$m auto clamp(2rem, 5vw, 3rem);
+}
+
+// Intro leggibile e centrata, misura di lettura contenuta.
+.intro {
+  max-width: 60ch;
+  margin-inline: auto;
+}
+
+// Blocco contatti diretti: email e telefono in colonna, centrati.
+.diretti {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: v.$m;
+  margin-top: v.$xxl;
+
+  .contatto {
+    display: inline-flex;
+    align-items: center;
+    gap: v.$xs;
+    color: var(--ink-title);
+    font-weight: 600;
+    transition: color v.$dur-tocco v.$ease-out-quint;
+
+    .icona {
+      flex-shrink: 0;
+      color: var(--ink-muted);
+      transition: color v.$dur-tocco v.$ease-out-quint;
+    }
+
+    &:hover {
+      text-decoration: underline;
+
+      .icona {
+        color: var(--ink-title);
+      }
+    }
+  }
+}
+
+// Titolo della sezione form (dark): registro manifesto, ma non è un H1.
+.formTitolo {
+  margin-bottom: v.$s;
+}

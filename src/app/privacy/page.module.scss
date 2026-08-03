@@ -1,0 +1,57 @@
+@use "@/sass/variables" as v;
+
+// Divisore tricolore sotto il titolo, come nella sezione "La Roba" e nel
+// carrello.
+.divisore {
+  width: 8rem;
+  margin: v.$m auto clamp(2rem, 5vw, 3rem);
+}
+
+// Documento legale: misura di lettura contenuta e centrata. I titoli di
+// sezione tornano in Archivo (var --font-body): non sono titoli manifesto,
+// quindi niente slab Graduate né maiuscolo forzato (DESIGN.md, two-register).
+.doc {
+  max-width: 68ch;
+  margin-inline: auto;
+
+  .lead {
+    color: var(--ink-body);
+  }
+
+  .meta {
+    margin-top: v.$m;
+    color: var(--ink-muted);
+    font-size: v.$s;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+  }
+
+  .sezione {
+    margin-top: v.$xxl;
+
+    h2 {
+      font-family: var(--font-body);
+      font-size: v.$l;
+      font-weight: 700;
+      line-height: 1.2;
+      text-transform: none;
+      letter-spacing: normal;
+      color: var(--ink-title);
+    }
+
+    p,
+    ul {
+      margin-top: v.$s;
+    }
+
+    ul {
+      padding-left: 1.25em;
+      list-style-position: outside;
+
+      li {
+        margin-top: v.$xs;
+      }
+    }
+  }
+}
