@@ -102,14 +102,13 @@ export const PRODUCTS: Product[] = [
     name: "Patriota della Domenica",
     description:
       "Cotone pesante e taglio dritto: l'orgoglio nazionale che indossi senza pensarci, dal divano allo stadio.",
-    priceCents: 3500,
-    material: "100% cotone pettinato, 180 g/m²",
+    priceCents: 2000,
+    material: "100% cotone pettinato, 150 g/m²",
     sizes: ["S", "M", "L", "XL", "XXL"],
     badge: { label: "Best Seller", tone: "neutro" },
     colors: [
       { name: "Nero", swatch: NERO, image: "/maglietta/maglietta-nera.jpg" },
       { name: "Bianco", swatch: BIANCO, image: "/maglietta/t-shirt-bianca.jpg" },
-      { name: "Bordeaux", swatch: BORDEAUX, image: "/maglietta/maglietta-1.png" },
     ],
     image: "/maglietta/maglietta-nera.jpg",
   },
@@ -180,6 +179,7 @@ export const PRODUCTS: Product[] = [
       "Visiera strutturata e ricamo tricolore. Per cantare l'inno dal balcone con un minimo di stile.",
     priceCents: 3000,
     material: "100% cotone, visiera strutturata, chiusura regolabile",
+    comingSoon: true,
     colors: [
       { name: "Nero", swatch: NERO, image: "/cappellino/cappellino-1.png" },
       { name: "Bianco", swatch: BIANCO, image: "/cappellino/cappellino-1.png" },
@@ -212,7 +212,7 @@ export const PRODUCTS: Product[] = [
     name: "Kit Attacca-Brighe",
     description:
       "Vinile impermeabile, colori che non mollano. Attaccali ovunque e semina un po' di sano orgoglio.",
-    priceCents: 1000,
+    priceCents: 500,
     material: "Vinile impermeabile, stampa UV resistente ai graffi",
     image: "/stampe/stickers.jpg",
   },

@@ -18,7 +18,7 @@ export default function HomePage() {
         <div className={cn("tricolore", styles.divisore)} aria-hidden="true" />
 
         <div className={styles.griglia}>
-          {PRODUCTS.map((product) => (
+          {PRODUCTS.filter((product) => !product.comingSoon).map((product) => (
             <ProductCard key={product.id} product={product} />
           ))}
         </div>
