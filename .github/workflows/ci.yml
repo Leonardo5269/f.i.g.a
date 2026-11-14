@@ -1,0 +1,47 @@
+# Integrazione continua: su ogni PR e su ogni push a main il progetto deve
+# installarsi, passare lint e controllo dei tipi e compilare.
+# Le action sono fissate per commit (il tag accanto è la versione).
+
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
+
+jobs:
+  verifica:
+    name: Lint, tipi e build
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    env:
+      NEXT_TELEMETRY_DISABLED: "1"
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+
+      - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
+        with:
+          node-version: 24
+          cache: npm
+          cache-dependency-path: package-lock.json
+
+      - run: npm ci --no-audit --no-fund
+
+      - name: Vulnerabilità delle dipendenze (high e critical)
+        run: npm audit --audit-level=high --omit=dev
+
+      - name: Tipi
+        run: npm run typecheck
+
+      - name: Build
+        run: npm run build
